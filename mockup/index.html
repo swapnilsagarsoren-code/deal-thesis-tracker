@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deal-Thesis Verdict Engine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ink: #1e1c17;
+    --paper: #efece4;
+    --card: #ffffff;
+    --line: #e2ddd0;
+    --muted: #8a8271;
+    --navy: #1c2b3a;
+    --navy-2: #2e3e4f;
+    --accent: #d97757;
+    --amber-bg: #4a3418;
+    --amber-fg: #f2c383;
+    --green-bg: #234a2f;
+    --green-fg: #8fd3a3;
+    --gray-bg: #3a3a38;
+    --gray-fg: #cfcac0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: #d8d3c6;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+  .serif { font-family: 'Source Serif 4', Georgia, serif; }
+
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: var(--paper);
+    border-radius: 34px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.35), 0 0 0 8px #111;
+    display: flex;
+    flex-direction: column;
+  }
+
+  button { font-family: inherit; }
+  .icon-btn {
+    width: 30px; height: 30px; border: none; background: none; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    border-radius: 8px;
+  }
+  .icon-btn:active { background: rgba(255,255,255,0.12); }
+
+  .top-header {
+    flex-shrink: 0; padding: 22px 20px 16px 20px; background: var(--navy);
+    color: #f5f1e8;
+  }
+  .top-header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+  .top-header p { margin: 4px 0 0 0; font-size: 12.5px; color: #a9b6c2; }
+
+  .claim-header {
+    flex-shrink: 0; padding: 20px 20px 14px 20px; background: var(--navy);
+    display: flex; flex-direction: column; gap: 6px; position: relative;
+  }
+  .claim-header .row { display: flex; align-items: center; gap: 12px; }
+  .claim-header .title { flex-grow: 1; min-width: 0; }
+  .claim-header .title .name { color: #f5f1e8; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .claim-header .title .sub { color: #a9b6c2; font-size: 12px; margin-top: 2px; }
+  .progress-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .progress-row .label { font-size: 11px; color: #7d8b98; letter-spacing: 0.03em; }
+  .progress-track { flex-grow: 1; height: 3px; background: var(--navy-2); border-radius: 2px; overflow: hidden; }
+  .progress-fill { width: 50%; height: 100%; background: var(--accent); }
+
+  .status-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; padding: 4px 10px; border-radius: 999px; width: fit-content; margin-top: 2px; }
+  .status-chip.reviewed { background: rgba(143, 211, 163, 0.16); color: var(--green-fg); }
+  .status-chip.auto { background: rgba(242, 195, 131, 0.16); color: var(--amber-fg); }
+
+  .more-menu {
+    position: absolute; top: 54px; right: 16px; background: #fff; border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25); overflow: hidden; z-index: 20;
+    display: none; min-width: 160px;
+  }
+  .more-menu.open { display: block; }
+  .more-menu button {
+    display: block; width: 100%; text-align: left; padding: 11px 14px; font-size: 13px;
+    border: none; background: none; cursor: pointer; color: var(--ink);
+  }
+  .more-menu button:active { background: #f2efe6; }
+  .more-menu button + button { border-top: 1px solid #eee; }
+
+  .body-scroll {
+    flex-grow: 1; overflow-y: auto; padding: 18px 20px 20px 20px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .body-scroll.with-tabbar { padding-bottom: 100px; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+  }
+
+  .greeting { font-size: 22px; font-weight: 600; }
+  .stat-row { display: flex; gap: 10px; }
+  .stat-card { flex: 1; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .stat-card .num { font-size: 22px; font-weight: 600; }
+  .stat-card .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cta-btn {
+    margin-top: 12px; width: 100%; padding: 11px 0; border-radius: 8px; border: none;
+    background: var(--navy); color: #f5f1e8; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .cta-btn:active { background: #12202c; }
+  .cta-btn.ghost { background: #ffffff; color: var(--navy); border: 1px solid var(--navy); }
+
+  .search-hero {
+    background: var(--navy); border-radius: 12px; padding: 16px;
+  }
+  .search-hero .lbl { color: #a9b6c2; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .search-input-row { display: flex; gap: 8px; }
+  .search-input-row input {
+    flex-grow: 1; border: none; border-radius: 8px; padding: 11px 12px; font-size: 13.5px;
+    font-family: inherit; background: #f5f1e8; color: var(--ink);
+  }
+  .search-input-row input:focus { outline: 2px solid var(--accent); }
+  .search-input-row button {
+    border: none; border-radius: 8px; padding: 0 16px; background: var(--accent); color: #fff;
+    font-weight: 600; font-size: 13px; cursor: pointer;
+  }
+
+  .deal-row {
+    display: flex; align-items: center; gap: 12px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 10px; padding: 14px; cursor: pointer;
+    width: 100%; text-align: left;
+  }
+  .deal-row:active { background: #f7f4ec; }
+  .deal-row .name { font-size: 14px; font-weight: 600; flex-grow: 1; }
+  .deal-row .year { font-size: 12px; color: var(--muted); }
+  .chip { font-size: 10.5px; font-weight: 600; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+  .chip.delivered { background: var(--green-bg); color: var(--green-fg); }
+  .chip.partial { background: var(--amber-bg); color: var(--amber-fg); }
+  .chip.pending { background: var(--gray-bg); color: var(--gray-fg); }
+  .chip.missed { background: #4a1f1f; color: #e5a3a3; }
+  .chip.disputed { background: #3a2f4a; color: #c8a8e5; }
+
+  .verdict-row { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .verdict-row .top { display: flex; justify-content: space-between; align-items: center; }
+  .verdict-row .claim { font-size: 12.5px; color: #57503f; margin-top: 8px; line-height: 1.4; }
+
+  .profile-card { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: #f5f1e8; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0; }
+  .settings-row { display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .settings-row .lbl { font-size: 13.5px; }
+  .settings-row .sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  .toggle { width: 42px; height: 24px; border-radius: 999px; background: #d8d2c2; position: relative; cursor: pointer; border: none; flex-shrink: 0; }
+  .toggle .knob { width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 3px; left: 3px; transition: left 0.15s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+  .toggle.on { background: var(--navy); }
+  .toggle.on .knob { left: 21px; }
+
+  .stated-claim-text { font-size: 15px; line-height: 1.5; }
+  .metric-row { display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap; }
+  .metric-row .k { font-size: 10px; color: #a39a86; letter-spacing: 0.04em; }
+  .metric-row .v { font-size: 13px; font-weight: 500; margin-top: 2px; }
+  .evidence-row {
+    display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 14px; font-size: 13px; width: 100%; text-align: left; cursor: pointer;
+  }
+  .evidence-row:active { background: #f7f4ec; }
+  .evidence-row .ext { margin-left: auto; flex-shrink: 0; }
+  .verdict-card { background: #2a2118; border-radius: 12px; padding: 18px; color: #f2ece0; }
+  .verdict-card .top { display: flex; align-items: center; justify-content: space-between; }
+  .verdict-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; }
+  .verdict-badge.partial { background: var(--amber-bg); color: var(--amber-fg); }
+  .verdict-badge.delivered { background: var(--green-bg); color: var(--green-fg); }
+  .verdict-badge.missed { background: #4a1f1f; color: #e5a3a3; }
+  .verdict-badge.pending { background: var(--gray-bg); color: var(--gray-fg); }
+  .verdict-badge.disputed { background: #3a2f4a; color: #c8a8e5; }
+  .verdict-card .conf { font-size: 11px; color: #a89a85; }
+  .verdict-card .rationale { font-size: 13.5px; line-height: 1.55; color: #ded4c2; margin-top: 12px; }
+  .verdict-card .footnote { display: flex; align-items: center; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #40372b; font-size: 11px; color: #8a7c66; }
+
+  .call-row { display: flex; gap: 10px; }
+  .call-btn {
+    flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 0; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+    background: #ffffff; border: 1px solid #d8d2c2; color: #57503f;
+  }
+  .call-btn.selected { background: var(--navy); border-color: var(--navy); color: #f5f1e8; }
+
+  .saved-line { font-size: 11.5px; color: var(--muted); margin-top: 8px; display: none; align-items: center; gap: 6px; }
+  .saved-line.show { display: flex; }
+
+  .tabbar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 78px; background: #ffffff;
+    border-top: 1px solid var(--line); display: flex; align-items: flex-start; justify-content: space-around;
+    padding-top: 10px;
+  }
+  .tab-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none;
+    cursor: pointer; padding: 4px 8px; color: #a39a86;
+  }
+  .tab-btn.active { color: var(--navy); font-weight: 600; }
+  .tab-btn .tlbl { font-size: 9.5px; }
+
+  .screen { display: none; flex-direction: column; height: 100%; }
+  .screen.active { display: flex; }
+
+  .toast {
+    position: absolute; left: 20px; right: 20px; bottom: 92px; background: var(--navy); color: #f5f1e8;
+    font-size: 12.5px; padding: 10px 14px; border-radius: 8px; text-align: center;
+    opacity: 0; transform: translateY(6px); transition: opacity 0.18s ease, transform 0.18s ease;
+    pointer-events: none; z-index: 30;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  .example-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .example-chip {
+    border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 13px;
+    font-size: 12px; cursor: pointer; color: #57503f;
+  }
+  .example-chip:active { background: #f2efe6; }
+
+  .loading-wrap {
+    flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 40px;
+  }
+  .spinner {
+    width: 34px; height: 34px; border-radius: 50%; border: 3px solid #d8d2c2; border-top-color: var(--navy);
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-wrap .msg { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+  .empty-note { font-size: 12.5px; color: var(--muted); line-height: 1.5; padding: 4px 2px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="top-header">
+      <h1>Deal-Thesis Tracker</h1>
+      <p>Good evening, Swapnil</p>
+    </div>
+    <div class="body-scroll with-tabbar">
+
+      <div class="search-hero">
+        <div class="lbl">TRACK ANY DEAL</div>
+        <div class="search-input-row">
+          <input id="home-search-input" type="text" placeholder="e.g. Hindalco – Aleris" />
+          <button onclick="submitSearchFromHome()">Go</button>
+        </div>
+      </div>
+
+      <div class="card" style="font-size:12px; color:var(--muted); line-height:1.5;">
+        <b>Mockup &middot; sample screens.</b> Claims and targets are the companies&rsquo; own public statements. No verdicts have been assessed yet.
+      </div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="num">6</div><div class="lbl">Deals tracked</div></div>
+        <div class="stat-card"><div class="num">0</div><div class="lbl">Verdicts published</div></div>
+      </div>
+      <div class="card">
+        <div class="section-label" style="margin-bottom:8px;">CONTINUE REVIEWING</div>
+        <div style="font-weight:600; font-size:14px;">Axis Bank &ndash; Citi India Consumer</div>
+        <div style="font-size:12.5px; color:var(--muted); margin-top:2px;">Claim 1 of 4 &middot; ready to extract</div>
+        <button class="cta-btn" onclick="openClaim('Axis Bank – Citi India Consumer', 'Closed Mar 2023', 'home')">Open claim</button>
+      </div>
+      <div class="card">
+        <div class="section-label" style="margin-bottom:8px;">RECENT ACTIVITY</div>
+        <div style="font-size:13px; color:#57503f; line-height:1.6;">
+          <b>RateGain&ndash;Sojern</b>: FY26 results filed &mdash; ready to check against guidance.<br>
+          <b>Torrent&ndash;JB Chemicals</b>: &#8377;450 Cr synergy target pre-registered &mdash; too early to call.
+        </div>
+      </div>
+    </div>
+    <div class="tabbar" id="tabbar-home"></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="screen" id="screen-search">
+    <div class="top-header">
+      <h1>Track any deal</h1>
+      <p>Live evaluation from public sources</p>
+    </div>
+    <div class="body-scroll with-tabbar">
+      <div class="search-input-row">
+        <input id="search-tab-input" type="text" placeholder="Type a deal name…" />
+        <button onclick="submitSearchFromTab()">Go</button>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">TRY AN EXAMPLE</div>
+        <div class="example-chip-row">
+          <button class="example-chip" onclick="runSearch('Hindalco – Aleris')">Hindalco&ndash;Aleris</button>
+          <button class="example-chip" onclick="runSearch('HDFC – HDFC Bank')">HDFC&ndash;HDFC Bank</button>
+          <button class="example-chip" onclick="runSearch('Titan – CaratLane')">Titan&ndash;CaratLane</button>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">RECENT SEARCHES</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="deal-row" onclick="runSearch('Hindalco – Aleris')">
+            <div><div class="name">Hindalco &ndash; Aleris</div><div class="year">Searched 2 days ago</div></div>
+          </button>
+          <button class="deal-row" onclick="runSearch('HDFC – HDFC Bank')">
+            <div><div class="name">HDFC &ndash; HDFC Bank</div><div class="year">Searched 5 days ago</div></div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="tabbar" id="tabbar-search"></div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="screen" id="screen-loading">
+    <div class="claim-header">
+      <div class="row">
+        <button class="icon-btn" aria-label="Back" onclick="showScreen('search')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f2ede2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="title"><div class="name serif">Searching&hellip;</div></div>
+      </div>
+    </div>
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div class="msg" id="loading-msg">Searching public sources for &ldquo;&hellip;&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- LIVE RESULT -->
+  <div class="screen" id="screen-liveresult">
+    <div class="claim-header">
+      <div class="row">
+        <button class="icon-btn" aria-label="Back" onclick="showScreen('search')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f2ede2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="title">
+          <div class="name serif" id="live-deal-name">&nbsp;</div>
+          <div class="sub">Live evaluation &middot; sources fetched just now</div>
+          <div class="status-chip auto">&#9679;&nbsp; AUTO-GENERATED &middot; UNREVIEWED</div>
+        </div>
+      </div>
+    </div>
+    <div class="body-scroll" id="live-result-body"></div>
+  </div>
+
+  <!-- DEALS -->
+  <div class="screen" id="screen-deals">
+    <div class="top-header">
+      <h1>Deals</h1>
+      <p>6 tracked &middot; 3 closed, 3 pending</p>
+    </div>
+    <div class="body-scroll with-tabbar" id="deals-list"></div>
+    <div class="tabbar" id="tabbar-deals"></div>
+  </div>
+
+  <!-- VERDICTS -->
+  <div class="screen" id="screen-verdicts">
+    <div class="top-header">
+      <h1>Verdicts</h1>
+      <p>AI-generated, human-reviewed</p>
+    </div>
+    <div class="body-scroll with-tabbar" id="verdicts-list"></div>
+    <div class="tabbar" id="tabbar-verdicts"></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="screen" id="screen-profile">
+    <div class="top-header">
+      <h1>Profile</h1>
+      <p>Account &amp; preferences</p>
+    </div>
+    <div class="body-scroll with-tabbar">
+      <div class="profile-card">
+        <div class="avatar">SS</div>
+        <div>
+          <div style="font-weight:600; font-size:14px;">Swapnil Sagar Soren</div>
+          <div style="font-size:12px; color:var(--muted);">IPMX &middot; IIM Lucknow</div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="lbl">Weekly digest</div>
+          <div class="sub">Email me new verdicts every Monday</div>
+        </div>
+        <button class="toggle on" id="toggle-digest" onclick="toggleSwitch('toggle-digest')"><div class="knob"></div></button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="lbl">Flag low-confidence verdicts</div>
+          <div class="sub">Ask for human review automatically</div>
+        </div>
+        <button class="toggle" id="toggle-flag" onclick="toggleSwitch('toggle-flag')"><div class="knob"></div></button>
+      </div>
+    </div>
+    <div class="tabbar" id="tabbar-profile"></div>
+  </div>
+
+  <!-- CLAIM DETAIL (reviewed / curated) -->
+  <div class="screen" id="screen-claim">
+    <div class="claim-header">
+      <div class="row">
+        <button class="icon-btn" aria-label="Back" onclick="goBack()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f2ede2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="title">
+          <div class="name serif" id="claim-deal-name">Axis Bank &ndash; Citi India Consumer</div>
+          <div class="sub" id="claim-deal-sub">Deal-Thesis Tracker &middot; Closed Mar 2023</div>
+          <div class="status-chip reviewed">&#9679;&nbsp; REVIEWED &middot; HUMAN-VERIFIED</div>
+        </div>
+        <button class="icon-btn" aria-label="More options" onclick="toggleMore(event)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#a9b6c2"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+        </button>
+      </div>
+      <div class="progress-row">
+        <div class="label">CLAIM 1 OF 4</div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+      </div>
+      <div class="more-menu" id="more-menu">
+        <button onclick="doMoreAction('Flagged for review')">Flag for review</button>
+        <button onclick="doMoreAction('Opening editor…')">Edit claim</button>
+        <button onclick="doMoreAction('Share link copied')">Share</button>
+      </div>
+    </div>
+
+    <div class="body-scroll">
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">STATED CLAIM</div>
+        <div class="card">
+          <div class="stated-claim-text serif" id="claim-text"></div>
+          <div class="metric-row">
+            <div><div class="k">METRIC</div><div class="v" id="claim-metric"></div></div>
+            <div><div class="k">THRESHOLD</div><div class="v" id="claim-threshold"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">COMPANY SOURCES</div>
+        <div style="display:flex; flex-direction:column; gap:8px;" id="claim-evidence"></div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">
+          AI VERDICT
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#b98a52" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"></path></svg>
+        </div>
+        <div class="verdict-card">
+          <div class="top">
+            <div class="verdict-badge pending" id="claim-badge">&#9679;&nbsp; NOT YET ASSESSED</div>
+            <div class="conf" id="claim-conf">Confidence: &mdash;</div>
+          </div>
+          <div class="rationale" id="claim-rationale"></div>
+          <div class="footnote">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a7c66" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Mockup &middot; verdict appears once extraction runs
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:8px;">YOUR CALL</div>
+        <div class="call-row">
+          <button class="call-btn selected" id="btn-agree" onclick="chooseVerdict('agree')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Agree with AI
+          </button>
+          <button class="call-btn" id="btn-override" onclick="chooseVerdict('override')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            Override
+          </button>
+        </div>
+        <div class="saved-line" id="saved-line">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a8271" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span id="saved-text">Saved &middot; you agreed with the AI verdict</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+  var TABS = [
+    { id: 'home', label: 'Home', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>' },
+    { id: 'search', label: 'Search', icon: '<circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>' },
+    { id: 'deals', label: 'Deals', icon: '<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>' },
+    { id: 'verdicts', label: 'Verdicts', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>' },
+    { id: 'profile', label: 'Profile', icon: '<circle cx="12" cy="8" r="4"></circle><path d="M4 21v-1a8 8 0 0 1 16 0v1"></path>' }
+  ];
+  var TOP_LEVEL = ['home', 'search', 'deals', 'verdicts', 'profile'];
+
+  var DEALS = [
+    { name: 'Zomato – Blinkit', year: 'Closed 2022', status: 'pending', label: 'To assess' },
+    { name: 'Adani – Ambuja/ACC', year: 'Closed 2022', status: 'pending', label: 'To assess' },
+    { name: 'Axis Bank – Citi India Consumer', year: 'Closed 2023', status: 'pending', label: 'To assess' },
+    { name: 'RateGain – Sojern', year: 'Closed 2025', status: 'partial', label: 'Early check' },
+    { name: 'Tilaknagar – Imperial Blue', year: 'Closed 2025', status: 'pending', label: 'Too early' },
+    { name: 'Torrent – JB Chemicals', year: 'Closed 2026', status: 'pending', label: 'Too early' }
+  ];
+
+  var CLAIMS = {
+    'Zomato – Blinkit': {
+      claim: '“Adjusted EBITDA break-even in less than 3 years.” (flagged by the company as an estimate, not guidance)',
+      metric: 'Blinkit adjusted EBITDA', threshold: 'Break-even by Jun 2025',
+      evidence: ['NSE filing: Proposed Acquisition of Blinkit, 24 Jun 2022', 'Zomato / Eternal annual reports FY23–FY25', 'Quarterly shareholder letters'],
+      rationale: 'Not yet assessed. The AI will extract Blinkit segment adjusted EBITDA from each quarterly shareholder letter; code then checks it against the break-even date.'
+    },
+    'Adani – Ambuja/ACC': {
+      claim: '“140 MTPA capacity by 2028; cost of ₹3,650 per tonne by FY28.”',
+      metric: 'Capacity (MTPA) · cost per tonne', threshold: '140 MTPA and ₹3,650/t by FY28',
+      evidence: ['Ambuja Cements investor decks', 'Adani Group press release, Apr 2025', 'Ambuja / ACC annual reports'],
+      rationale: 'Not yet assessed. Partly in progress — the tracker will also log how the target dates have moved since 2022.'
+    },
+    'Axis Bank – Citi India Consumer': {
+      claim: '“EPS and ROE accretive in CY24; cost savings of 30–40% of Citi opex over two years; full transition by Sep 2024.”',
+      metric: 'EPS / ROE · Citi opex saved', threshold: 'Accretive CY24; 30–40% opex saved',
+      evidence: ['Axis Bank investor presentation, 1 Mar 2023 (closing)', 'Axis Bank annual reports FY24–FY25', 'Axis Bank earnings call transcripts'],
+      rationale: 'Not yet assessed. Several hard numbers with dates — a strong candidate for the full extract-then-compute pipeline.'
+    },
+    'RateGain – Sojern': {
+      claim: '“FY26 revenue growth of 55–60% and EBITDA margin of 16–17%; Sojern EBITDA margin 16.5–17.5% at Mar-2026 exit.”',
+      metric: 'FY26 revenue growth · EBITDA margin', threshold: '+55–60% revenue; 16–17% margin',
+      evidence: ['RateGain earnings call, 11 Nov 2025', 'RateGain FY26 results filing'],
+      rationale: 'Early check possible: FY26 results are filed. The AI will extract reported growth and margin; code compares them with the guidance ranges.'
+    },
+    'Tilaknagar – Imperial Blue': {
+      claim: '“Net debt/EBITDA below 1.0x by end of FY29; cash-EPS accretive after closing.”',
+      metric: 'Net debt / EBITDA · cash EPS', threshold: '< 1.0x by FY29; accretive',
+      evidence: ['Tilaknagar investor presentation, Jul 2025', 'Tilaknagar completion disclosure, Dec 2025'],
+      rationale: 'Threshold pre-registered. Too early to call — the deal closed in Dec 2025.'
+    },
+    'Torrent – JB Chemicals': {
+      claim: '“Around ₹450 Cr of annual synergies.”',
+      metric: 'Annual synergies realised', threshold: '~₹450 Cr per year',
+      evidence: ['Torrent Pharma press release, 29 Jun 2025', 'Torrent Pharma annual report'],
+      rationale: 'Threshold pre-registered. Too early to call — the deal closed in Jan 2026.'
+    }
+  };
+
+  var VERDICTS = [
+    { name: 'RateGain – Sojern', status: 'partial', label: 'Early check', text: 'FY26 results filed — ready to compare with 55–60% growth guidance.' },
+    { name: 'Axis Bank – Citi India Consumer', status: 'pending', label: 'To assess', text: 'Targets dated CY24 / Sep 2024 — ready for extraction.' },
+    { name: 'Zomato – Blinkit', status: 'pending', label: 'To assess', text: 'Break-even target date (Jun 2025) has passed — ready for extraction.' }
+  ];
+
+  var LIVE_EXAMPLES = {
+    'hindalco – aleris': {
+      claim: '“About $150M of run-rate synergies, 45–50% within three years.” Later restated to “more than $180M”.',
+      metric: 'Run-rate synergies', threshold: '$150M (later >$180M)',
+      evidence: ['Novelis closing deck, Apr 2020 (Hindalco site)', 'Novelis FY21 results'],
+      status: 'pending', label: 'IN PROGRESS', rationale: 'Company reported $79M achieved by FY21. The target was later raised, so the tracker would log the restatement itself as a finding before judging delivery.',
+      confidence: 'Medium'
+    },
+    'hdfc – hdfc bank': {
+      claim: 'Merger thesis stated mostly in qualitative terms (scale, cross-sell, cost of funds).',
+      metric: '—', threshold: 'No numeric target found',
+      evidence: ['HDFC Bank press release, Apr 2022', 'HDFC Bank investor presentation, Apr 2022'],
+      status: 'pending', label: 'UNVERIFIABLE', rationale: 'No hard, dated number in the company’s own announcement materials, so there is nothing to test against. This is why it was dropped from the curated set.',
+      confidence: 'Low'
+    },
+    'titan – caratlane': {
+      claim: 'Buyout of the remaining minority stake; no separate synergy target stated.',
+      metric: '—', threshold: 'No synergy target found',
+      evidence: ['Titan stock exchange disclosure'],
+      status: 'pending', label: 'UNVERIFIABLE', rationale: 'A minority buyout with a thin synergy thesis — nothing specific to pre-register. Dropped from the curated set for this reason.',
+      confidence: 'Low'
+    }
+  };
+
+  var state = { returnTab: 'home', lastQuery: '' };
+
+  function renderTabbars() {
+    TOP_LEVEL.forEach(function (screenId) {
+      var el = document.getElementById('tabbar-' + screenId);
+      if (!el) return;
+      el.innerHTML = TABS.map(function (t) {
+        var active = t.id === screenId ? ' active' : '';
+        var color = t.id === screenId ? '#1c2b3a' : '#a39a86';
+        return '<button class="tab-btn' + active + '" onclick="showScreen(\'' + t.id + '\')">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2">' + t.icon + '</svg>' +
+          '<span class="tlbl">' + t.label + '</span></button>';
+      }).join('');
+    });
+  }
+
+  function renderDeals() {
+    var el = document.getElementById('deals-list');
+    el.innerHTML = DEALS.map(function (d) {
+      return '<button class="deal-row" onclick="openClaim(\'' + d.name.replace(/'/g, "\\'") + '\', \'Deal-thesis review\', \'deals\')">' +
+        '<div><div class="name">' + d.name + '</div><div class="year">' + d.year + '</div></div>' +
+        '<span class="chip ' + d.status + '">' + d.label + '</span>' +
+        '</button>';
+    }).join('');
+  }
+
+  function renderVerdicts() {
+    var el = document.getElementById('verdicts-list');
+    el.innerHTML = VERDICTS.map(function (v) {
+      return '<div class="verdict-row">' +
+        '<div class="top"><div style="font-weight:600; font-size:13.5px;">' + v.name + '</div>' +
+        '<span class="chip ' + v.status + '">' + v.label + '</span></div>' +
+        '<div class="claim">' + v.text + '</div></div>';
+    }).join('');
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+    document.getElementById('screen-' + id).classList.add('active');
+    if (TOP_LEVEL.indexOf(id) !== -1) {
+      state.returnTab = id;
+    }
+  }
+
+  function openClaim(name, sub, fromTab) {
+    document.getElementById('claim-deal-name').textContent = name;
+    document.getElementById('claim-deal-sub').textContent = sub;
+    var c = CLAIMS[name];
+    if (c) {
+      document.getElementById('claim-text').textContent = c.claim;
+      document.getElementById('claim-metric').textContent = c.metric;
+      document.getElementById('claim-threshold').textContent = c.threshold;
+      document.getElementById('claim-rationale').textContent = c.rationale;
+      document.getElementById('claim-evidence').innerHTML = c.evidence.map(function (e) {
+        return '<button class="evidence-row" onclick="showToast(\'Would open source in a new tab\')">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7d8b98" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>' +
+          '<div>' + e + '</div></button>';
+      }).join('');
+    }
+    state.returnTab = fromTab;
+    showScreen('claim');
+  }
+
+  function goBack() {
+    closeMore();
+    showScreen(state.returnTab);
+  }
+
+  function toggleMore(e) {
+    e.stopPropagation();
+    document.getElementById('more-menu').classList.toggle('open');
+  }
+  function closeMore() {
+    document.getElementById('more-menu').classList.remove('open');
+  }
+  document.addEventListener('click', closeMore);
+
+  function doMoreAction(msg) {
+    closeMore();
+    showToast(msg);
+  }
+
+  function chooseVerdict(choice) {
+    var agreeBtn = document.getElementById('btn-agree');
+    var overrideBtn = document.getElementById('btn-override');
+    agreeBtn.classList.toggle('selected', choice === 'agree');
+    overrideBtn.classList.toggle('selected', choice === 'override');
+    var line = document.getElementById('saved-line');
+    var text = document.getElementById('saved-text');
+    text.textContent = choice === 'agree'
+      ? 'Saved · you agreed with the AI verdict'
+      : 'Saved · you overrode the AI verdict';
+    line.classList.add('show');
+  }
+
+  function toggleSwitch(id) {
+    document.getElementById(id).classList.toggle('on');
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1600);
+  }
+
+  function submitSearchFromHome() {
+    var v = document.getElementById('home-search-input').value.trim();
+    if (!v) { showToast('Type a deal name first'); return; }
+    showScreen('search');
+    runSearch(v);
+  }
+  function submitSearchFromTab() {
+    var v = document.getElementById('search-tab-input').value.trim();
+    if (!v) { showToast('Type a deal name first'); return; }
+    runSearch(v);
+  }
+
+  function runSearch(query) {
+    state.lastQuery = query;
+    document.getElementById('loading-msg').textContent = 'Searching public sources for “' + query + '”…';
+    showScreen('loading');
+    setTimeout(function () { renderLiveResult(query); showScreen('liveresult'); }, 1300);
+  }
+
+  function renderLiveResult(query) {
+    var key = query.trim().toLowerCase();
+    var data = LIVE_EXAMPLES[key];
+    document.getElementById('live-deal-name').textContent = query;
+    var body = document.getElementById('live-result-body');
+
+    if (!data) {
+      body.innerHTML =
+        '<div class="card">' +
+        '<div class="section-label" style="margin-bottom:8px;">RESULT</div>' +
+        '<div class="empty-note">No strong public signal found yet for this deal. Either it’s too recent, too small to have coverage, or the name didn’t match well-known sources.</div>' +
+        '</div>' +
+        '<div class="verdict-card">' +
+        '<div class="top"><div class="verdict-badge pending">&#9679;&nbsp; UNVERIFIABLE</div><div class="conf">Confidence: Low</div></div>' +
+        '<div class="rationale">Try the exact commonly-used deal name (e.g. the acquirer and target as reported in the press), or check back once more public reporting exists.</div>' +
+        '</div>';
+      return;
+    }
+
+    body.innerHTML =
+      '<div>' +
+      '<div class="section-label" style="margin-bottom:8px;">INFERRED CLAIM</div>' +
+      '<div class="card"><div class="stated-claim-text serif">' + data.claim + '</div>' +
+      '<div class="metric-row"><div><div class="k">METRIC</div><div class="v">' + data.metric + '</div></div>' +
+      '<div><div class="k">THRESHOLD</div><div class="v">' + data.threshold + '</div></div></div></div></div>' +
+
+      '<div>' +
+      '<div class="section-label" style="margin-bottom:8px;">EVIDENCE FOUND</div>' +
+      '<div style="display:flex; flex-direction:column; gap:8px;">' +
+      data.evidence.map(function (e) {
+        return '<button class="evidence-row" onclick="showToast(\'Would open source in a new tab\')">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7d8b98" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>' +
+          '<div>' + e + '</div>' +
+          '<svg class="ext" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a39a86" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' +
+          '</button>';
+      }).join('') + '</div></div>' +
+
+      '<div>' +
+      '<div class="section-label" style="margin-bottom:8px;">AI VERDICT</div>' +
+      '<div class="verdict-card">' +
+      '<div class="top"><div class="verdict-badge ' + data.status + '">&#9679;&nbsp; ' + data.label + '</div>' +
+      '<div class="conf">Confidence: ' + data.confidence + '</div></div>' +
+      '<div class="rationale">' + data.rationale + '</div>' +
+      '<div class="footnote"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a7c66" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>' +
+      'Auto-generated from a live search just now &middot; not human-reviewed</div></div></div>' +
+
+      '<div class="call-row">' +
+      '<button class="call-btn" onclick="showToast(\'Saved to My Tracker\')">Save to my tracker</button>' +
+      '<button class="call-btn" onclick="showToast(\'Thanks — we’ll take a look\')">Report issue</button>' +
+      '</div>';
+  }
+
+  renderTabbars();
+  renderDeals();
+  renderVerdicts();
+</script>
+
+</body>
+</html>
