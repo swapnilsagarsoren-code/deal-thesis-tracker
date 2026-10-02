@@ -9,47 +9,50 @@
 ## Scope
 
 **Must ship**
-1. 4–5 curated deals on the fixed test-plan template
-2. Extract-then-compute pipeline working end-to-end on ≥2 deals (with citations)
-3. Forensic Extraction line-item list applied to those 2 deals
+1. 4 curated deals on the fixed test-plan template
+2. Value-driver tree per deal, built on financial-statement lines
+3. Extract-then-compute pipeline working end-to-end on **Axis–Citi** and **RateGain–Sojern** (with citations)
+4. CFO value-realization summary table (status from code)
 
 **Roadmap slide only (do not build)**
 - Live search via Linkup
 - Forensic Scorecard
-- Verdict history
+- Status history
+- Management-action hypotheses
 - Payments
 
-**Only if everything else is done:** methodology page.
+**Only if everything else is done:** methodology page; 3-bullet AI summary.
 
 ## Time estimate
 
 | Work | Days |
 |---|---|
-| Deal curation + collecting source filings | 2 |
+| Forensic line-item list + collecting source filings | 2 |
+| Value-driver trees + pre-registered thresholds (4 deals) | 1 |
 | Extraction pipeline (prompt, citations, testing on real filings) | 3–4 |
-| Threshold-check code + writing pre-registered thresholds | 1–2 |
-| Wire mockup UI to real data | 2 |
+| Threshold-check code | 1 |
+| Screens: tree + summary table, wired to real data | 2 |
 | Testing, bug fixing, buffer | 2–3 |
-| **Total** | **10–13** |
+| **Total** | **11–13** |
 
-**Read:** fits, with almost no slack. If behind by ~Oct 8, drop to 4 deals. **Never** cut the extraction pipeline to make room — it is the only part that proves the AI is doing real work.
+**Read:** fits, with little slack. The value-driver tree was paid for by cutting from 5 deals to 4. If behind by ~Oct 8, drop the other 2 deals to "targets and tree only" (no extraction). **Never** cut the extraction pipeline on Axis–Citi and RateGain–Sojern — it is the only part that proves the AI does real work.
 
 ## Suggested day plan
 
 | Dates | Focus |
 |---|---|
-| Before Oct 2 | Confirm GrowthX rules; write forensic line items; shortlist deals |
-| Oct 2–3 | Collect filings; write pre-registered thresholds |
-| Oct 4–7 | Extraction pipeline on deal #1 and #2 |
-| Oct 8–9 | Threshold code; checkpoint — cut to 4 deals if behind |
+| Oct 2–3 | Confirm GrowthX rules; finalise forensic line items; pick the other 2 deals; collect filings |
+| Oct 4 | Value-driver trees; write pre-registered thresholds (dated) |
+| Oct 5–8 | Extraction pipeline on Axis–Citi and RateGain–Sojern |
+| Oct 9 | Threshold code; checkpoint — cut the other 2 deals to tree-only if behind |
 | Oct 10 | Unavailable |
-| Oct 11–13 | Remaining deals (lighter touch); wire UI |
+| Oct 11–13 | Tree + summary screens; wire real data |
 | Oct 14–15 | Test, fix |
 | Oct 16–17 | Buffer, demo recording, methodology page if time |
 
 ## Success check on Oct 17
 
-- [ ] A stranger can open the site and see 4–5 deals with verdicts
-- [ ] For 2 deals, clicking a verdict shows the extracted number, its source quote, the threshold, and the rule that produced the verdict
+- [ ] A stranger can open the site and see 4 deals, each with a value-driver tree
+- [ ] For Axis–Citi and RateGain–Sojern, clicking a target shows the extracted number, its source quote, the threshold and the rule that produced the status
 - [ ] Thresholds are dated earlier than the extraction run
-- [ ] Nothing on the site claims live search works
+- [ ] No invented targets or numbers anywhere; nothing claims live search works

@@ -18,3 +18,10 @@
 | 14 | Scope cut to 4–5 deals, ≥2 full pipeline | Realistic for ~14 part-time days at beginner coding level |
 | 15 | Stayed with the tracker over alternative ideas (forensic index, model auditor, M&A index) | No concrete flaw in the tracker was found; switching would restart planning with the sprint days away |
 | 16 | Mockup as plain HTML, not Design-canvas artifact | Canvas format kept breaking interactivity |
+| 17 | Axis–Citi replaces HDFC–HDFC Bank (28 Sep) | HDFC's thesis was mostly qualitative — no hard number to test |
+| 18 | Renamed to "M&A Value Realization Tracker (India)" and framed as a CFO-office tool (2 Oct) | "Value realization" is the term finance and consulting teams use; tracking post-deal synergies is a CFO-office job, so the framing matches the work honestly |
+| 19 | Value-driver tree built on financial-statement lines (2 Oct) | Tracing a promise to the line where it should show up in the accounts is the core finance skill to demonstrate; reuses the forensic line-item list |
+| 20 | Drivers without a company target shown as "No target committed", never given an invented target (2 Oct) | Inventing targets breaks pre-registration and the company-sources rule; the gap is itself a finding |
+| 21 | Scope cut to 4 deals; Axis–Citi and RateGain–Sojern get the full pipeline (2 Oct) | Pays for the value-driver tree; these two have the cleanest dated numbers |
+| 22 | Dropped AI "management action" suggestions and generalising to "transformation programs" (2 Oct) | Outsider speculation a partner can't verify; internal transformation targets are not publicly disclosed, so M&A is the only area with public data |
+| 23 | Never call it a "platform" or say it "continuously tracks" | It is a working prototype; overclaiming fails in interviews |
