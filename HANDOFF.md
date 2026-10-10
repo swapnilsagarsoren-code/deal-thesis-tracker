@@ -1,82 +1,138 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: 10 Oct 2026.
+For any AI model or person continuing this project. Last updated: **10 Oct 2026, ~19:00 IST**.
 
-## 1. Who you are working with
+## 1. Who you are working with, and who does what
 
-- **Swapnil** — ex-Deloitte external auditor (5 years, manufacturing/automotive clients), now in a one-year MBA. Builds this solo.
-- **Coding level:** beginner Python. Builds with AI coding help (Codex / Claude). Prefer simple JS + static hosting over complex stacks.
-- **Working style and goals:** see `private/ai-working-notes.md` (local only).
+- **Swapnil:** ex-Deloitte external auditor (5 years, manufacturing/automotive clients), now in a one-year MBA (IIM Lucknow IPMX). Builds this solo, as a placement story for finance transformation consulting (Accenture CFO&EV, Accenture Strategy, EY-Parthenon). Placement week starts **26 Oct 2026**.
+- **Coding level:** beginner. All code is written by AI agents.
+- **Roles:**
+  - **Codex (terminal)** builds the app in `~/build-sprint-app`.
+  - **Shaktimaan (the GrowthX Build Sprint AI agent)** reviews the product and plans the sprint.
+  - **Claude** keeps this folder and the HQ site entry updated, sense-checks Codex and Shaktimaan, checks prod data (read-only Convex connection), and checks claims against the source PDFs.
+- **Working style:** direct, critical, simple English, bullet points. More in `private/ai-working-notes.md` (local only).
 
-## 2. What the product is
+## 2. What the product is (honest current state)
 
-**M&A Value Realization Tracker (India)** — a prototype of the tool a CFO's office uses after an acquisition to track whether promised synergies are arriving.
+**M&A Value Realization Tracker (India).** It checks whether an Indian acquirer delivered what it publicly promised in a deal.
+- It takes the company's own stated promises with exact quote, page, deadline and threshold.
+- It checks later disclosures against them.
+- Fixed rules in code decide the status: Delivered / Partial / Missed / Too early / Unverifiable / No target committed.
+- **Today it has no AI.** Evidence is entered by hand.
+- **Planned AI role (not built):** you give a filing; AI finds the sentence about a chosen promise and returns the quote, page, any number, and what that number is measured against (its base and period).
+  - Code checks that the quote appears word for word on that page.
+  - A human confirms, then the rules decide.
+  - AI never decides a status.
+  - When it finds nothing, it must show what it searched.
+- **Positioning:** a CFO-office value-realization check, and a *public-disclosure reconciliation*. Not "forensic proof", not an investor tool, not a "platform". Detail: [`docs/product-spec.md`](docs/product-spec.md).
+- **Origin:** an Accenture consultant's on-campus session (1 Aug 2026). His points: merger savings across infra/licence/people, "cite the sources", human in the loop.
 
-For each deal: take the company's own stated targets, map each to the financial-statement line where it should appear, pre-set a pass/fail threshold, have an LLM **extract** the actual number from filings with a source citation, and let **plain code** decide the status.
+## 3. Where things stand (10 Oct 2026 evening)
 
-**Positioning:** CFO-office value realization and finance controls — not an investor or deals tool. Lead with the business problem and the control design, not the AI. Full detail: [`docs/product-spec.md`](docs/product-spec.md).
+**Live app:** https://doting-zebra-426.convex.site (Convex prod `doting-zebra-426`; dev `deafening-sparrow-421`, dev URL https://deafening-sparrow-421.convex.site). React + Vite + Convex. Code is in `~/build-sprint-app` (not on GitHub; not in this folder).
+- One deal: Axis Bank buying Citi India consumer business (closed 1 Mar 2023). Two promises:
 
-## 3. Where things stand
+| Promise | Source | Status | "What we found" (shown to visitors) |
+|---|---|---|---|
+| Integration: "complete the full integration seamlessly within 18 months post LD1" | 1 Mar 2023 call, p.5 (start date p.16) | **Delivered** (rev 3) | Management reported completing the final customer migration on 14 Jul 2024 (Q1FY25 call p.4), before the 1 Sep 2024 deadline. Seamlessness for customers not tested. |
+| Cost savings: "30%-40% of Citi's operating expenses … over 2 years post closing" (basis CY2020 opex) | Deal presentation p.16 (closing date p.6) | **Unverifiable** (rev 1) | Management said synergies came "a bit ahead of the plan", measured against an internal six-quarter Board plan (Q4FY25 call p.13). The sources reviewed don't report the saving against the public 30–40% promise. |
 
-- Planning, stress-testing, clickable mockup: **done**
-- Old mockup live at https://deal-thesis-tracker.vercel.app (Vercel auto-deploys the `mockup/` folder from `main`) — superseded by the Convex app below
-- Real build: **started 2 Oct 2026**
-- **Build setup (from 10 Oct 2026):** the app is built with the GrowthX AI agent and in the Codex terminal, and hosted on Convex (convex.dev). Live at https://doting-zebra-426.convex.site. App code is **not** in this folder.
-- **This folder's role:** planning, decisions and handoff docs only. Claude keeps it updated; it does not build the app.
-- **Live app as checked on 10 Oct 2026:**
-  - One page, "Deal check" for Axis Bank × Citi India Consumer
-  - Evidence entered by hand (promise quote, source link, PDF page; result quote, source, page, measured-as-of date, a same-measure confirmation)
-  - Status decided by six fixed rules in code, with no AI: Unverifiable, No target committed, Delivered, Too early, Partial (needs a quoted baseline), Missed
-  - Later on 10 Oct: evidence entered for one claim — the integration milestone ("complete the full integration within 18 months post LD1", Axis call transcript 1 Mar 2023, p.5; deadline 1 Sep 2024). Result: final migration completed 14 Jul 2024 (Axis Q1FY25 call transcript, p.4). Status: **Delivered**
-  - Later on 10 Oct (app commit c9489c3): second promise added — "cost savings of 30%-40% of Citi's operating expenses … over 2 years post closing" (Axis investor presentation, p.16; basis CY2020 opex; deadline 1 Mar 2025). Result quote from Axis Q4FY25 call (p.13) says synergies came "a bit ahead of the plan" but gives **no number**, so status is **Unverifiable** (correct under the rules)
-  - The 30–40% cost-range rule is hard-coded to this one promise; EPS/ROE accretion promise not tracked yet
-  - ~~Editable by anyone with the link~~ **Fixed and shipped 10 Oct ~17:28 IST** (app commits 0b66dcc, d97ff94, 5023a13, 87eb721, 113efb5): saves need a server-side passcode (EDIT_PASSCODE env var, set by Swapnil; never shared); Edit UI shown only with ?edit=1; visitors see a "What we found" line under each status; integration promise and start date now cited separately (p.5 / p.16, checked against the PDF); cost-savings finding: management measured against an internal six-quarter Board plan, and the reviewed sources don't report the saving against the public 30–40% promise. Prod statuses and revisions unchanged (Delivered r3, Unverifiable r1); pre-ship snapshot in private/.
-- **Convex access for Claude:** Convex MCP server added to the Claude desktop app (read-only on production `doting-zebra-426`; writes and env vars blocked). Dev deployment is `deafening-sparrow-421`.
-- **Gaps against the plan:** only an operational milestone checked so far (not a financial target); results so far come from management call transcripts, not audited statements; no AI extraction step yet; no forensic check built yet (bank-specific line items needed — see docs/forensic-extraction.md, written for non-banks); 1 deal live (plan: 4); no value-driver tree or CFO summary yet
-- Sprint: GrowthX Build Sprint, **2–17 Oct 2026** (Oct 10 unavailable)
+- **Shipped on 10 Oct:**
+  - Edit lock: saves need a server-side passcode in the `EDIT_PASSCODE` env var. Swapnil set it on prod and never shares it.
+  - The edit screen shows only with `?edit=1`.
+  - "Loading assessment" shows while data loads, and a retry message with no verdict if loading fails.
+  - Each source link shows document title and date, has a 44px tap area, and uses `#page=N` (all 8 links checked: printed page = PDF page for these documents).
+  - Separate citations for the promise and the start date.
+  - Prod statuses and version numbers unchanged throughout. Snapshots before each ship are in `~/build-sprint-app/artifacts/` and `private/prod-snapshot-2026-10-10-pre-ship.md`.
+- **Portfolio page live:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker (repo `swapnilhq`). It shows both results, links to the live tracker, and has a "View the plan" button pointing to this repo.
+- **Old mockup:** https://deal-thesis-tracker.vercel.app. Superseded; not linked anywhere new.
 
-## 4. Locked decisions — do not reopen without new information
+**Honest weakness (Swapnil's own view, agreed):** so far it compares management's words with management's words. The fix is to test claims against evidence management doesn't control in the same way: annual-report figures, regulator data, and what management declined to disclose.
 
-1. Curated deals only. Live "search any deal" (Linkup API) is **post-sprint**.
-2. Scope for Oct 17: **4 deals; Axis–Citi and RateGain–Sojern get the full extract → code-check → cited status pipeline.**
-3. Status = deterministic code, never the LLM's opinion, whenever a real number exists.
-4. Thresholds are written down **before** running extraction (pre-registration).
-5. Only targets the company itself stated in public sources. Never invent a target — a value driver with no company target is shown as "No target committed".
-6. Value-driver tree is built on **financial-statement lines** (revenue, COGS, SG&A, employee cost, goodwill/impairment, return on capital).
-7. No payments, no Forensic Scorecard, no AI "management action" suggestions in the sprint.
-8. Do not describe it as a "platform" or as "continuously tracking" — it is a working prototype.
+## 4. Findings so far (verified against the PDFs)
 
-Reasons for each: [`docs/decision-log.md`](docs/decision-log.md).
+- **Cost savings: different basis disclosed.** The public promise was 30–40% of CY2020 Citi opex over 2 years. The later success claim is against an internal six-quarter Board plan. No bridge between the two is in the reviewed sources.
+- **Integration cost** (full table: [`docs/integration-cost-evidence.md`](docs/integration-cost-evidence.md)):
+  - Estimate: about ₹2,000 cr pre-tax over 18 months (1 Mar 2023 call p.8; repeated in FY23 AR PDF p.109, covering "transitional costs and integration expenses").
+  - Disclosed: FY23 ₹217 cr (FY23 AR PDF p.109) and FY24 ₹1,106 cr (FY24 AR printed p.212 = PDF p.212, MD&A). That's ₹1,323 cr for 13 of 18 months.
+  - Apr–Aug 2024 not disclosed. FY25 AR (PDF p.238) says only that integration costs fell.
+  - Both figures are management narrative in the annual report, not confirmed as audited notes. It's unclear whether TSA costs are inside ₹1,106 cr.
+- **Declined to disclose:**
+  - Q1FY25 call, PDF p.18: an analyst asked for integration costs and retention ratios.
+  - CFO's answer included "we don't share specific numbers", followed by a claim that every acquisition metric was "met or exceeded".
+- **Market-share claim, corrected:** the deal deck's 11.4% → 16.2% is a share of credit-card *spends/advances* (p.14 footnote), not card counts. The 9.4M + 1.8M = 11.2M card figure is on p.10, with a consent cutoff of 20 Feb 2023.
 
-## 5. Guardrails
+**Interview line (defensible):** "Axis disclosed ₹1,323 crore of its ₹2,000 crore integration budget for 13 of 18 months, then stopped; when an analyst asked for the numbers, it declined while saying every target was met. And its cost-saving success was measured against an internal plan, not the public 30–40% promise. I built a cited tracker that makes these evidence gaps visible without calling them failures."
 
-- **Scope creep.** Any new feature idea gets checked against section 4 and the time estimate before work starts.
-- **Wrong terms.** The curated deals are *few-shot examples + a grounded rubric*, **not "training data"**. No model is trained.
-- **No invented numbers.** Every number on screen must trace to a company source or be clearly marked sample.
+## 5. Locked decisions (reasons in [`docs/decision-log.md`](docs/decision-log.md))
 
-## 6. Next actions (in order)
+1. **Sprint scope (changed 10 Oct):** Axis–Citi in depth only. No new deals before 17 Oct.
+2. Status is decided by deterministic code, never by an LLM. `shared/statusRules.ts` is not changed without an explicit decision.
+3. Only targets the company itself stated publicly. Never invent a target; a gap is shown as a gap.
+4. **Honest sequence:** promises are recorded exactly as stated and then checked. This was retrospective (deal picked and results read the same day), so don't claim "fixed before seeing results".
+5. **Wording:** "public-disclosure reconciliation", not "forensic proof". "Different basis disclosed / Comparable / Insufficient detail", not "moved goalposts". "Unverifiable" or "cannot reconcile", never "failed", when data is missing.
+6. Never call it a "platform" or say it "continuously tracks".
+7. Silence is not failure. Not disclosing ≠ not delivering.
 
-1. Confirm with GrowthX that extending an existing project is allowed in the sprint. *(unconfirmed)*
-2. Swapnil finalises the line items per claim type in [`docs/forensic-extraction.md`](docs/forensic-extraction.md). This is also the backbone of the value-driver tree.
-3. Pick the other 2 deals from [`docs/deals.md`](docs/deals.md); collect source filings for all 4.
-4. Build each deal's value-driver tree and write pre-registered thresholds, dated, *before* any extraction run.
-5. Build the extraction prompt + source-pinning; test on Axis–Citi and RateGain–Sojern.
-6. Write the threshold-check code.
-7. Replace the mockup's hardcoded data with real results; add the tree and summary-table screens.
-8. Test, fix, buffer. (If time) methodology page; optional 3-bullet AI summary that never changes a status.
+## 6. Guardrails for anyone changing the app
 
-Time estimate and day plan: [`docs/sprint-plan.md`](docs/sprint-plan.md).
+- **Dev and prod have separate databases.** A data change on dev doesn't reach prod. Use a one-off, idempotent internal migration: snapshot prod before, migrate, snapshot after. Or edit on prod through `?edit=1` with the passcode.
+- **The passcode** is never pasted into chat, code, logs or commits.
+- **Loading or fetch failure must never show a verdict.**
+- **`#page=N` uses the PDF page index.** Annual reports can differ from printed pages, so show "printed p. X (PDF p. Y)" when they differ. Keep the page label visible as text, because iOS Safari ignores `#page`.
+- **No invented numbers.** Every number traces to a page. Label each number's assurance level: audited note, annual-report narrative, or call transcript.
+- **Ask Codex for raw test output, not summaries.** Verify prod with the read-only Convex connection after every ship.
 
-## 7. Sprint goal (as submitted to GrowthX)
+## 7. Next actions: 11–17 Oct (Shaktimaan's plan, adopted with Claude's edits)
 
-> Ship, by Oct 17, a working demo of an India M&A deal-thesis tracker covering 4–5 curated deals, where for at least 2 of them the AI extracts specific numbers from company filings (e.g. cost-synergy targets, headcount claims) and a deterministic rule checks them against a threshold set before the outcome was known — producing a cited verdict (on-track / missed / too early).
->
-> Longer-term, the product should let anyone check any live deal this way, not just pre-loaded ones — but that needs a search integration not yet built, so it is explicitly out of scope for this sprint.
->
-> What this build proves: the AI does real analytical work — extraction plus rule-based checking — not just summarizing filings or chatting about a deal, which is what separates it from asking ChatGPT or Perplexity the same question.
+1. **11 Oct:** freeze the research questions and source inventory; write down the retrospective sequence honestly. *(Loading fix and integration wording already shipped 10 Oct.)*
+2. **12 Oct, check 3 (basis comparison):**
+   - Put the public 30–40% promise next to the internal-plan statement.
+   - For each, record metric, denominator, business perimeter, baseline, period and deadline.
+   - Output: "Different basis disclosed", plus the CFO action: ask the synergy owner for the bridge from public baseline → internal plan → realised saving.
+3. **13–14 Oct, check 1 (integration-cost reconciliation):** mostly researched already (section 4). Remaining:
+   - check the audited notes to the accounts in the FY24/FY25 reports for integration cost
+   - settle whether TSA costs are inside ₹1,106 cr
+   - find the printed page for FY23 PDF p.109
+   - build the period-and-scope table with assurance labels
+   - if it can't be completed, show "Cannot reconcile the complete comparable cost from the reviewed sources"
+4. **15 Oct, check 2 (bounded):** cards outstanding only, from RBI monthly tables (Axis, Citi, all banks around the closing date). Two-hour gate to confirm the definitions match. If they don't, publish "Not comparable on the available definitions" and stop. Never test the spend-share % with card counts.
+5. **16 Oct:** freeze scope, recheck every number and link, rehearse with someone who doesn't know the deal.
+6. **17 Oct:** fix only demo blockers; 3-minute demo plus a backup recording.
+- **Deferred:**
+  - AI "silence timeline" (check 4)
+  - AI extraction build
+  - goodwill / purchase-price allocation
+  - bank-specific line-item map (`docs/forensic-extraction.md` is written for non-banks)
+  - a fourth promise (the ₹2,000 cr integration budget as a tracked promise)
+- **Cap the build at about 3 hours a day.** Case-interview prep had not started as of late Sep, and cases decide placement.
 
-The product was renamed and reframed on 2 Oct 2026 (see decision log); the submitted goal still holds.
+**3-minute demo order:**
+1. Who needs this.
+2. The public promise vs the internal-plan claim.
+3. The cost table with assurance labels.
+4. The RBI comparison, or why it was rejected.
+5. Open a citation and show the fixed rule.
+6. The CFO action and the limit of the conclusion.
 
-## 8. Private context
+## 8. Sprint goal (as submitted to GrowthX)
 
-A `private/` folder exists locally (not in the public repo — see `.gitignore`) with working style, goals, outreach contacts and calendar constraints. Ask Swapnil for it if you need it.
+> Ship, by Oct 17, a working demo of an India M&A deal-thesis tracker covering 4–5 curated deals, where for at least 2 of them the AI extracts specific numbers from company filings … and a deterministic rule checks them against a threshold set before the outcome was known — producing a cited verdict.
+
+**Honest gap against it:** 1 deal, not 4–5, and no AI extraction yet. The scope was cut deliberately on 10 Oct (decision log rows 24–25). Say so plainly if asked.
+
+## 9. Where everything lives
+
+| Thing | Location |
+|---|---|
+| This handoff and the planning docs | `~/Downloads/Work/deal-thesis-tracker` → GitHub `swapnilsagarsoren-code/deal-thesis-tracker` (public) |
+| App code | `~/build-sprint-app` (local only) |
+| Source PDFs (Axis reports, transcripts, decks) | `~/Downloads/growthxbuilddocs`; also uploaded to the claude.ai Project "M&A Tracker" (which is full) |
+| HQ portfolio site | `~/Downloads/Work/swapnilhq` → GitHub `swapnilhq` (private) → Vercel → hq.swapnilsoren.com |
+| Career notes | `~/Downloads/Work/Career-OS/master-repository/experience-bank/ai-products.md` (Product 4) |
+| Private notes, prod snapshot | `private/` in this folder (gitignored) |
+| Backup of pre-rebase local history | branch `backup-before-rebase-10oct` in this repo |
+
+## 10. Private context
+
+`private/` holds working style, goals, outreach contacts (send the demo to the Accenture contact only once it works) and calendar constraints. Not in the public repo.
