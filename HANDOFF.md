@@ -27,9 +27,11 @@ For each deal: take the company's own stated targets, map each to the financial-
   - One page, "Deal check" for Axis Bank × Citi India Consumer
   - Evidence entered by hand (promise quote, source link, PDF page; result quote, source, page, measured-as-of date, a same-measure confirmation)
   - Status decided by six fixed rules in code, with no AI: Unverifiable, No target committed, Delivered, Too early, Partial (needs a quoted baseline), Missed
-  - No evidence entered yet (status shows Unverifiable)
+  - Later on 10 Oct: evidence entered for one claim — the integration milestone ("complete the full integration within 18 months post LD1", Axis call transcript 1 Mar 2023, p.5; deadline 1 Sep 2024). Result: final migration completed 14 Jul 2024 (Axis Q1FY25 call transcript, p.4). Status: **Delivered**
+  - Data model holds **one claim per deal**; the financial promises (EPS/ROE accretive in CY24, 30–40% Citi opex savings) are not tracked yet
   - Editable by anyone with the link (no login)
-- **Gaps against the plan:** no AI extraction step yet; edits not locked; 1 deal live (plan: 4); no value-driver tree or CFO summary yet
+- **Convex access for Claude:** Convex MCP server added to the Claude desktop app (read-only on production `doting-zebra-426`; writes and env vars blocked). Dev deployment is `deafening-sparrow-421`.
+- **Gaps against the plan:** only an operational milestone checked so far (not a financial target); results so far come from management call transcripts, not audited statements; no AI extraction step yet; edits not locked; 1 deal live (plan: 4); no value-driver tree or CFO summary yet
 - Sprint: GrowthX Build Sprint, **2–17 Oct 2026** (Oct 10 unavailable)
 
 ## 4. Locked decisions — do not reopen without new information
