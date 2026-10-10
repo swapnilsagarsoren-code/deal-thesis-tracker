@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: 2 Oct 2026.
+For any AI model or person continuing this project. Last updated: 10 Oct 2026.
 
 ## 1. Who you are working with
 
@@ -19,8 +19,17 @@ For each deal: take the company's own stated targets, map each to the financial-
 ## 3. Where things stand
 
 - Planning, stress-testing, clickable mockup: **done**
-- Mockup live at https://deal-thesis-tracker.vercel.app (Vercel auto-deploys the `mockup/` folder from `main`)
+- Old mockup live at https://deal-thesis-tracker.vercel.app (Vercel auto-deploys the `mockup/` folder from `main`) — superseded by the Convex app below
 - Real build: **started 2 Oct 2026**
+- **Build setup (from 10 Oct 2026):** the app is built with the GrowthX AI agent and in the Codex terminal, and hosted on Convex (convex.dev). Live at https://doting-zebra-426.convex.site. App code is **not** in this folder.
+- **This folder's role:** planning, decisions and handoff docs only. Claude keeps it updated; it does not build the app.
+- **Live app as checked on 10 Oct 2026:**
+  - One page, "Deal check" for Axis Bank × Citi India Consumer
+  - Evidence entered by hand (promise quote, source link, PDF page; result quote, source, page, measured-as-of date, a same-measure confirmation)
+  - Status decided by six fixed rules in code, with no AI: Unverifiable, No target committed, Delivered, Too early, Partial (needs a quoted baseline), Missed
+  - No evidence entered yet (status shows Unverifiable)
+  - Editable by anyone with the link (no login)
+- **Gaps against the plan:** no AI extraction step yet; edits not locked; 1 deal live (plan: 4); no value-driver tree or CFO summary yet
 - Sprint: GrowthX Build Sprint, **2–17 Oct 2026** (Oct 10 unavailable)
 
 ## 4. Locked decisions — do not reopen without new information
