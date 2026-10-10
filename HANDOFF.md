@@ -28,7 +28,8 @@ For each deal: take the company's own stated targets, map each to the financial-
   - Evidence entered by hand (promise quote, source link, PDF page; result quote, source, page, measured-as-of date, a same-measure confirmation)
   - Status decided by six fixed rules in code, with no AI: Unverifiable, No target committed, Delivered, Too early, Partial (needs a quoted baseline), Missed
   - Later on 10 Oct: evidence entered for one claim — the integration milestone ("complete the full integration within 18 months post LD1", Axis call transcript 1 Mar 2023, p.5; deadline 1 Sep 2024). Result: final migration completed 14 Jul 2024 (Axis Q1FY25 call transcript, p.4). Status: **Delivered**
-  - Data model holds **one claim per deal**; the financial promises (EPS/ROE accretive in CY24, 30–40% Citi opex savings) are not tracked yet
+  - Later on 10 Oct (app commit c9489c3): second promise added — "cost savings of 30%-40% of Citi's operating expenses … over 2 years post closing" (Axis investor presentation, p.16; basis CY2020 opex; deadline 1 Mar 2025). Result quote from Axis Q4FY25 call (p.13) says synergies came "a bit ahead of the plan" but gives **no number**, so status is **Unverifiable** (correct under the rules)
+  - The 30–40% cost-range rule is hard-coded to this one promise; EPS/ROE accretion promise not tracked yet
   - Editable by anyone with the link (no login)
 - **Convex access for Claude:** Convex MCP server added to the Claude desktop app (read-only on production `doting-zebra-426`; writes and env vars blocked). Dev deployment is `deafening-sparrow-421`.
 - **Gaps against the plan:** only an operational milestone checked so far (not a financial target); results so far come from management call transcripts, not audited statements; no AI extraction step yet; edits not locked; 1 deal live (plan: 4); no value-driver tree or CFO summary yet
