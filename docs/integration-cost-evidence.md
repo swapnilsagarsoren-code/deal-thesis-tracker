@@ -1,28 +1,52 @@
-# Axis–Citi: integration-cost evidence (verified 10 Oct 2026)
+# Axis–Citi: integration-cost evidence (verified 11 Oct 2026)
 
-Checked by text search of the PDFs in growthxbuilddocs. "PDF p." = page index in the file. Where known, the printed page is given too.
+Checked by text search of the source PDFs (deal deck, 1 Mar 2023 call, Q4FY24/Q1FY25/Q2FY25/Q4FY25 calls, full annual reports FY23–FY26). "PDF p." = page index in the file; printed page given where it differs.
 
-## Original estimate
-- ~₹2,000 cr pre-tax (₹1,500 cr post-tax), incurred over 18 months: 1 Mar 2023 call transcript, PDF p.8.
-- Repeated as "current best estimate of the transitional costs and integration expenses is ~₹2,000 crores": FY23 annual report, PDF p.109.
-- Scope: the estimate covers transitional (TSA) costs and integration expenses together.
+**Page offsets (printed vs PDF):** FY23 AR printed = PDF − 2. FY24 AR printed = PDF. FY25 AR printed = PDF (checked at p.238). FY26 AR printed = PDF + 1. Deck and transcripts printed = PDF.
 
-## Amounts disclosed
-| Period | Months after close | Amount | Source | Assurance level |
+## Original estimate (what Axis promised)
+- "We had estimated Rs 2,000 crores pre-tax, Rs 1,500 crores post-tax. We stay with that estimate. And that expense will be incurred over 18 months period." — 1 Mar 2023 call, p.8. Call/management commentary.
+- Repeated: "current best estimate of the transitional costs and integration expenses is ~₹2,000 crores" — FY23 AR printed p.107 (PDF p.109). MD&A.
+- Start date: "The current best estimate of the transitional period is 18 months commencing from 1 March, 2023" — FY23 AR printed p.106 (PDF p.108). MD&A. Window = 1 Mar 2023 to 31 Aug 2024. (Settles the "1 April 2023, for discussion purposes" wording on call p.10.)
+- **Different basis disclosed at deal time:** deck p.15 shows ₹1,500 cr "post tax impact over 2 financial years", not 18 months.
+- **Scope:** deck p.15 note 3: "Integration expenses includes transition services agreement expenses to be paid to Citigroup or its Affiliates and Axis Bank's own cost." Call p.12: TSA ≈ "70% to 75%" of the estimate, charged on a straight-line basis.
+
+## Amounts disclosed (what Axis later reported)
+| Period | Months after close | Amount | Source | Assurance |
 |---|---|---|---|---|
-| FY23 (Mar 2023) | 1 | ₹217 cr | FY23 AR, PDF p.109 | Management narrative in annual report (not confirmed as audited note) |
-| FY24 (Apr 2023–Mar 2024) | 2–13 | ₹1,106 cr | FY24 AR, printed p.212 = PDF p.212 (MD&A) | Management narrative in annual report (not confirmed as audited note) |
-| Apr–Aug 2024 (to the 18-month mark) | 14–18 | Not disclosed | FY25 AR PDF p.238 and Q2FY25 call p.7 say only "reduction in integration costs" | — |
+| FY23 (Mar 2023) | 1 | ₹217 cr | FY23 AR printed p.107 (PDF p.109) | MD&A |
+| FY24 (Apr 2023–Mar 2024) | 2–13 | ₹1,106 cr | FY24 AR p.212 | MD&A |
+| FY25 (Apr 2024–Mar 2025) | 14–18 fall here | Not disclosed — "partially offset by reduction in integration costs" | FY25 AR p.238; Q2FY25 call p.7 | MD&A / call |
+| FY26 | after window | Not disclosed — same wording | FY26 AR printed p.246 (PDF p.245) | MD&A |
 
-- Disclosed total to Mar 2024: ₹1,323 cr, covering 13 of the 18 months. The last 5 months have no number.
-- Scope ambiguity: FY24 text mentions "operating expenses pursuant to the transitional services agreement and other integration expenses", then gives ₹1,106 cr as "integration expenses". Unclear whether TSA costs are inside the ₹1,106 cr.
-- Q4FY24 call, p.9: integration expenses were about 11% of year-on-year cost growth in rupee terms.
+- Disclosed to Mar 2024: ₹1,323 cr for months 1–13 of 18. No number for months 14–18.
+- FY26 wording says costs fell vs FY25. It does **not** say whether any were incurred in FY26. Don't claim they continued.
+- Share of cost growth: FY23 AR printed p.106: 6% of FY23 cost increase; FY24 AR p.212: 13% of FY24 cost increase. Q4FY24 call p.9: ~11% of YoY cost growth **for the Q4 quarter only** — don't mix with the full-year 13%.
+
+## The estimate was never referred to again after FY23 (verified 11 Oct)
+- Text search of all 11 reviewed documents for the ₹2,000 cr estimate: it appears only in the 1 Mar 2023 call (p.8) and the FY23 AR (printed p.107 / PDF p.109).
+- It does not appear in the FY24, FY25 or FY26 annual reports, or in the Q4FY24, Q1FY25, Q2FY25 or Q4FY25 calls. No document compares actual integration cost with the estimate.
+- Label: "Estimate not referred to after FY23; no comparison disclosed." Not a failure finding — costs may have come in under the estimate; the filings don't say.
+- Note: in the blind AI test, Haiku quoted the restated estimate rather than the ₹217 cr actual from the same FY23 paragraph. That is model selection behaviour, not evidence about Axis — both figures sit side by side in the source.
+
+## Audited notes: searched, no integration-cost figure
+- Searched all four ARs for "integration expense", "integration cost", "transitional services". Hits only in MD&A and in the FY23 auditor's key audit matter (TSA listed as a reviewed document). So ₹217 cr and ₹1,106 cr stay at MD&A assurance. (Text search; a table with other wording can't be fully ruled out.)
+- **Do not add to the integration total** (FY23 audited note 18.1, printed p.240 / PDF p.242):
+  - ₹179.27 cr "one-time stamp duty costs" (exceptional item) — transaction cost.
+  - ₹129.33 cr policy harmonisation in opex; ₹232.14 cr in provisions — policy alignment.
+  - ₹11,949.08 cr amortisation of intangibles and goodwill — purchase price.
+- Final purchase price ₹11,932.39 cr vs ₹11,949.08 cr estimated — FY24 AR PDF p.328 (audited notes). Not integration cost.
 
 ## Management declined to give numbers when asked
-- Q1FY25 call, PDF p.18: analyst Anand Dama asked for retention ratios (cards, employees, deposits, loans) and integration costs.
-- Answer (Arjun Chowdhry): "we don't share specific numbers". He then said that on every metric set out at acquisition they had "met or exceeded that metric".
+- Q1FY25 call (24 Jul 2024), p.18: analyst Anand Dama asked for retention ratios and integration costs.
+- Answer (Arjun Chowdhry): "consistent with the earlier quarters too, we don't share specific numbers" — a standing policy, not a one-off. He then said every metric set out at acquisition was "met or exceeded".
+- Context for fairness: on the 1 Mar 2023 call p.7, the CEO said "Right now we have not decided what we'll share and how much we'll share." Axis never committed to publish integration numbers.
 
 ## Status
-- The full 18-month cost can't be reconciled against the ₹2,000 cr estimate from these sources: the last 5 months are undisclosed and the TSA scope is unclear.
-- This is a disclosure gap, not a failure finding. The bank declined to close it when asked directly.
-- Still to do: check whether the FY24/FY25 audited notes to accounts show integration costs separately; find the printed page for FY23 PDF p.109.
+- **Cannot reconcile the complete comparable cost from the reviewed sources:** months 14–18 not disclosed, tax basis of disclosed amounts not stated, TSA scope likely included but not confirmed.
+- No variance, % of budget or projection against ₹2,000 cr — periods don't match.
+- This is a disclosure gap, not a failure finding.
+
+## Parked (out of scope until after 17 Oct)
+- FY26 tax benefit from Citi intangibles: tax lower by ₹2,193.20 cr in FY26 — FY26 AR audited note PDF p.423 (printed p.424); MD&A PDF p.247 (printed p.248). Purchase-price-allocation area. Inflates FY26 profit; know it for EPS questions.
+- CET1: FY25 AR PDF p.152 "Absorbed 191 bps … for acquisition of CitiBank India consumer business" vs 177 bps on 1 Mar 2023 call p.4. Closing-date capital, not value realisation.

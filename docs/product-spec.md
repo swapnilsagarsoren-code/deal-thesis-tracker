@@ -1,82 +1,48 @@
 # Product spec — M&A Value Realization Tracker (India)
 
+*Current as of 11 Oct 2026.*
+
 ## Problem
 
-After an acquisition, management promises value: cost synergies, margin targets, break-even dates. The CFO's office is usually responsible for tracking whether that value arrives and reporting it to the board. In practice the link between the original promise, the operating numbers and the reported financials gets lost across decks, filings and earnings-call commentary. From outside, almost nobody checks — and when they do, they judge with hindsight.
+After a deal, management promises value. Later reporting often drops the promise, changes its basis, or goes quiet. Few people line up the promise against what was actually reported.
 
-## Who it is for (framing)
+## Who it is for
 
-A prototype of the synergy-tracking and value-reporting tool a CFO's office or integration team would use, demonstrated on public Indian deals. It shows three finance-transformation skills: tracing a strategic promise to the line in the accounts where it should appear, building controls so every status can be checked, and reporting value realization clearly.
+The check a CFO's office or integration team would run on its own deal, shown on public data. It is not an investor tool and makes no claims about fraud or intent.
 
-## Core idea
+## Scope
 
-For each deal, build a test plan **before** looking at the outcome, then check it against audited numbers.
+- One deal: Axis Bank × Citi India Consumer (closed 1 Mar 2023).
+- Sources: 11 Axis documents, namely the deal deck, the closing call, the completion announcement, 4 earnings calls and the FY23–FY26 annual reports.
 
-### Test-plan template (same for every deal)
+## Top 3 features
 
-| Field | Example (Axis–Citi) |
-|---|---|
-| Stated thesis | Grow the cards and affluent franchise; accretive to EPS and ROE |
-| Company-stated target | Cost savings of 30–40% of Citi opex over 2 years |
-| Source | Axis Bank investor presentation, 1 Mar 2023 |
-| Financial-statement line | Operating expenses (employee + other) of the acquired business |
-| Threshold (pre-registered) | e.g. Delivered ≥ 30%; Partial 15–30%; Missed < 15% |
-| Status | Delivered / Partial / Missed / Too early / Unverifiable / No target committed |
+1. A promised-vs-reported summary of 4 promises. The status comes from six fixed rules, never from AI.
+2. Cited evidence cards: every quote is linked to its page with an assurance label. They include the integration-cost reconciliation and a reporting-basis comparison.
+3. An AI evidence finder (Claude Haiku):
+   - It suggests passages, and code checks every quote word for word.
+   - Nothing is shown publicly until a person accepts it.
+   - Test results: practice set 7–8/10; held-out set 4/6 found, and 3/3 correctly found nothing.
 
-## Value-driver tree (built on financial-statement lines)
+## What it doesn't do
 
-Each deal's stated targets are grouped under value drivers, and each driver is tied to where it shows up in the accounts:
+Other deals; live search; forecasts; calling silence "failure"; claiming audited assurance for management commentary.
 
-```
-Deal thesis
-├── Revenue        → segment revenue, fee income, customer counts (where disclosed)
-├── Cost           → COGS, SG&A, employee cost, integration / one-time costs
-└── Capital & risk → goodwill and impairment, leverage, ROE / ROCE, EPS
-```
+## Method
 
-Rules:
-- Only targets the company itself stated are scored.
-- A driver with no company target is shown as **"No target committed — not scored"**. That gap is itself a finding: it shows what management avoided promising.
-- The financial-statement mapping comes from [`forensic-extraction.md`](forensic-extraction.md).
+- The review is retrospective, not outcome-blind.
+- A promise with no number or date is marked "No target committed".
+- A changed basis is marked "Different basis disclosed".
 
-## Architecture: extract-then-compute
+## Success check (17 Oct)
 
-```
-Filing PDF ──► LLM extracts number + exact citation ──► stored value
-                                                         │
-Pre-registered threshold (human, written earlier) ──────►│
-                                                         ▼
-                                           Plain code compares → status
-```
+- [ ] A stranger sees all 4 promises and their statuses within 10 seconds.
+- [ ] Every number opens its source page.
+- [ ] The methodology page states the retrospective sequence.
+- [ ] 3 people have used it, and one comment from each is logged.
+- [ ] The demo video is recorded.
 
-- **Quantifiable target:** LLM only extracts. Code decides. Status is reproducible.
-- **Non-quantifiable claim:** LLM gives a judgment, labelled "lower confidence".
-- **Source-pinning:** every extracted number stores document, page and quote. This is the main guard against extraction errors.
-- **Control design (audit-built):** extraction is kept separate from judgment; ambiguous cases are flagged for human review. Lead with this in interviews.
+## Stack
 
-## Screens (sprint)
-
-1. **Deal overview** — thesis, deal value, timeline, overall status
-2. **Value-driver tree** — drivers mapped to financial-statement lines, each with its status
-3. **Evidence page** — per target: promise, source, baseline, target, deadline, actual, quote, variance, confidence
-4. **CFO value-realization summary** — driver | stated target | actual | variance | status | source. Status from code only.
-
-Optional, last: a 3-bullet AI summary of the code's results. It may never change a status.
-
-## Not in the sprint (roadmap)
-
-- **Live search** for any deal (Linkup API), tagged "auto-generated, unreviewed"
-- **Forensic Scorecard** — synergy type, target specificity, acquirer experience, integration risk, timeline realism (grounded in Bain / BCG / Accenture research, see [`research-sources.md`](research-sources.md))
-- **Status history** — how a status changes as new filings arrive; the strongest answer to "why not Perplexity"
-- **Management-action hypotheses** — dropped for now: an outsider's AI guessing why a public company missed a target is speculation
-
-## Why not just ChatGPT / Perplexity
-
-See [`stress-tests.md`](stress-tests.md). Short version: pre-registered thresholds, statuses from code, every number linked to its source, an audit-built map of where value shows up in the accounts, and a record kept over time.
-
-## Tech (suggested)
-
-- Static site on Vercel (already live for the mockup)
-- Serverless function for LLM calls (keeps the API key off the client)
-- JSON files as the data store — no database needed for 4 deals
-- JavaScript over Python, given the builder's skill level
+- React + Vite on Convex: dev `deafening-sparrow-421`, prod `doting-zebra-426`.
+- The finder sits behind a kill switch with daily limits.
