@@ -48,8 +48,10 @@ A fixed set of rules in code decides every status. The same evidence always give
 
 ## 4. Why the AI never decides the status
 
-- **Today there is no AI in this tracker.** Every quote and number was entered and checked by hand against the source PDFs.
-- **The planned role for AI is narrow:** given a filing and a chosen promise, find the sentence that reports on it and return the quote, page and any number.
+- **How AI is used.** An AI evidence finder has been built and tested on a separate test site. Given a promise, it suggests passages from Axis's own documents. Code rejects any quote that is not word for word on its page.
+- **"Verified" means only that the words are on that page**, not that they answer the question. On questions frozen before testing, it found 4 of 6 and correctly found nothing for 3 of 3.
+- **It is switched off on this site.** Every finding shown here was entered and checked by a person, and fixed rules, never AI, decide each status.
+- **The disclosure timeline is not shown on this site.** It labels which document last repeats a target. In testing, the AI did not return one key sentence, which would have overstated the gap, so the finding shown is from a hand text search.
 - **Three checks stand between the AI and the result:** code confirms the quote appears word for word on that page, a person confirms what it means, and only then do the fixed rules give a status.
 - **When the AI finds nothing, it must show what it searched**, so a gap is visible rather than hidden.
 - The reason is simple: reading documents is where AI helps; deciding pass or fail must be repeatable and checkable, so it stays in code.
@@ -68,7 +70,7 @@ A fixed set of rules in code decides every status. The same evidence always give
 ## 7. Limits
 
 - All sources are prepared by Axis's management. Even audited accounts reflect management's choices.
-- Not disclosing a number is not the same as not delivering it. Silence is shown as a gap, never as a failure.
+- Not disclosing a number is not the same as not delivering it. A missing disclosure is shown as a gap, never as a failure.
 - Sources were searched by text. A figure in a table with different wording could be missed.
 - This covers one deal, in depth. It is a working prototype, not a complete record of Indian M&A.
 

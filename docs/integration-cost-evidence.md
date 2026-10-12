@@ -28,6 +28,8 @@ Checked by text search of the source PDFs (deal deck, 1 Mar 2023 call, Q4FY24/Q1
 - It does not appear in the FY24, FY25 or FY26 annual reports, or in the Q4FY24, Q1FY25, Q2FY25 or Q4FY25 calls. No document compares actual integration cost with the estimate.
 - Label: "Estimate not referred to after FY23; no comparison disclosed." Not a failure finding — costs may have come in under the estimate; the filings don't say.
 - Note: in the blind AI test, Haiku quoted the restated estimate rather than the ₹217 cr actual from the same FY23 paragraph. That is model selection behaviour, not evidence about Axis — both figures sit side by side in the source.
+- Re-run 12 Oct on the page files of all 11 documents: same result. Later ₹2,000 cr / ₹1,500 cr hits (FY26 AR PDF p.107, 147, 209, 211) are a fund launch and bonds, not this estimate. The completion announcement and the Q4FY25 call do not mention integration costs.
+- This finding rests on the text search, not on the AI disclosure timeline. In live runs the finder did not return the FY23 restatement, so the timeline is hidden on public cards (decision log row 37).
 
 ## Audited notes: searched, no integration-cost figure
 - Searched all four ARs for "integration expense", "integration cost", "transitional services". Hits only in MD&A and in the FY23 auditor's key audit matter (TSA listed as a reviewed document). So ₹217 cr and ₹1,106 cr stay at MD&A assurance. (Text search; a table with other wording can't be fully ruled out.)

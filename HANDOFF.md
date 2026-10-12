@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: **11 Oct 2026, ~18:30 IST**.
+For any AI model or person continuing this project. Last updated: **12 Oct 2026, ~11:30 IST**.
 
 ## 1. Who you are working with, and who does what
 
@@ -44,7 +44,7 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
   - Each source link shows document title and date, has a 44px tap area, and uses `#page=N` (all 8 links checked: printed page = PDF page for these documents).
   - Separate citations for the promise and the start date.
   - Prod statuses and version numbers unchanged throughout. Snapshots before each ship are in `~/build-sprint-app/artifacts/` and `private/prod-snapshot-2026-10-10-pre-ship.md`.
-- **Portfolio page live:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker (repo `swapnilhq`). It shows both results, links to the live tracker, and has a "View the plan" button pointing to this repo.
+- **Portfolio page live:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker (repo `swapnilhq`). Since 11 Oct evening it carries the long-form build write-up (key points, 8 sections, sources), status "In progress", and a note that the full tracker goes live on 16 Oct. No "Read the method" button until prod has the method page. On 16 Oct: remove the note, add the method button, set status "Live" (the `drafts/` copy holds the final frontmatter).
 - **Old mockup:** https://deal-thesis-tracker.vercel.app. Superseded; not linked anywhere new.
 
 - **11 Oct, on dev only (not on prod):**
@@ -55,14 +55,16 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
   - Stored in two NEW tables (`additionalPromise`, `reportingReview`); `deal` table and `shared/statusRules.ts` untouched. New save functions need the passcode and are locked to dev — that lock must be changed deliberately on prod release day.
   - Gotcha: a daily cron rewrites `assessment.asOf` on the `deal` rows at midnight IST. Snapshot comparisons must ignore that one field.
   - Integration-cost panel: ₹1,323 crore "Disclosed, months 1–13 of 18", no variance, exclusions collapsed.
-  - **Phase 4.0/4.1 polish (deployed and seeded on dev, 11 Oct evening):**
+  - **Phase 4.0–4.7 polish (deployed and seeded on dev, 11 Oct evening):**
     - Top summary table "What was promised vs what was reported" (4 rows, status badges from the rules), then the one-line finding: "1 delivered (management-reported), 3 cannot be verified from Axis's public sources…".
     - Integration threshold now "complete the full integration" (exact substring), with "'Seamlessly': not tested" shown; promise quote trimmed of "And number five,". Status still Delivered.
     - Integration-budget card: target "~₹2,000 crore pre-tax over 18 months (an estimate, not a cap)", deadline 31 Aug 2024, reported "₹1,323 crore for months 1–13; months 14–18 not disclosed", measured as of 31 Mar 2024, analyst refusal cited (Q1FY25 p.18). Status Unverifiable.
     - EPS/ROE card: "No reviewed document (annual reports FY24–FY26, Q4FY24–Q4FY25 calls) states whether the acquisition was EPS or ROE accretive…". Verified by text search: every "accretion" hit in those documents is about CET1 capital or deposits.
     - Auditor table shown once; empty finder timelines replaced by "Evidence finder: not run for this promise."; one date format.
-  - **Decision (11 Oct): prod release waits until 16 Oct**, together with the final recheck of numbers and links. Release = snapshot prod → lift the dev-only lock on the new save/seed functions (passcode stays) → deploy → seed prod → snapshot → check live page at 390px/1440px.
+    - Key findings (5 bullets), 8-item menu with click lock and scroll tracking, iOS-style section picker on phones, stacked tables on phones (Phases 4.5–4.7).
+  - **Decision (11 Oct): prod release waits until 16 Oct**, together with the final recheck of numbers and links. Release = snapshot prod → lift the dev-only lock on the new save/seed functions (passcode stays) → deploy → seed prod → snapshot → check live page at 390px/1440px. An early release on 11 Oct was considered and declined (too many steps); the Phase 5.0 release prompt drafted in chat on 11 Oct is the checklist for 16 Oct.
   - **Decision (11 Oct): reviewer = Swapnil for now**; fill name/date on prod via `?edit=1` after release. Swap in a second reviewer if one becomes available.
+- **12 Oct (dev only): Phase 4.8** hides the finder/timeline section on public cards behind a flag (edit mode unchanged), adds one cited sentence to the integration-budget card ("The ~₹2,000 crore estimate is last repeated in the FY23 annual report (PDF p. 109). No later document reviewed refers to it or compares spending against it.") and syncs the methodology page §4/§7 text.
 
 **Honest weakness (Swapnil's own view, agreed):** so far it compares management's words with management's words. The fix is to test claims against evidence management doesn't control in the same way: annual-report figures, regulator data, and what management declined to disclose.
 
@@ -73,7 +75,8 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
   - Estimate: about ₹2,000 cr pre-tax over 18 months (1 Mar 2023 call p.8; repeated in FY23 AR PDF p.109, covering "transitional costs and integration expenses").
   - Disclosed: FY23 ₹217 cr (FY23 AR PDF p.109) and FY24 ₹1,106 cr (FY24 AR printed p.212 = PDF p.212, MD&A). That's ₹1,323 cr for 13 of 18 months.
   - Apr–Aug 2024 not disclosed. FY25 AR (PDF p.238) says only that integration costs fell.
-  - Both figures are management narrative in the annual report, not confirmed as audited notes. It's unclear whether TSA costs are inside ₹1,106 cr.
+  - Both figures are management narrative in the annual report, not confirmed as audited notes. Deal deck p.15 note 3 says the integration estimate "includes transition services agreement expenses to be paid to Citigroup" (already in docs/integration-cost-evidence.md), so the estimate includes TSA; whether ₹1,106 cr does is not stated outright.
+  - **The estimate is last repeated in the FY23 AR (PDF p.109).** Text search of all 11 documents (first done 11 Oct, re-run 12 Oct): no later document restates ~₹2,000 cr or compares actual spend against it. Later ₹2,000 cr / ₹1,500 cr hits (FY26 p.107, 147, 209, 211) are a fund launch and bonds, not the integration estimate. The completion announcement and the Q4FY25 call don't mention integration costs.
 - **Declined to disclose:**
   - Q1FY25 call, PDF p.18: an analyst asked for integration costs and retention ratios.
   - CFO's answer included "we don't share specific numbers", followed by a claim that every acquisition metric was "met or exceeded".
@@ -87,6 +90,8 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
 
 **Interview line (defensible):** "Axis disclosed ₹1,323 crore of integration cost against a ~₹2,000 crore estimate, covering 13 of 18 months; when an analyst asked for the numbers, management said it doesn't share specific numbers, while saying every target was met. And its cost-saving success was measured against an internal plan, not the public 30–40% promise. I built a cited tracker that makes these evidence gaps visible without calling them failures."
 
+**Timeline line (demo and interviews):** "Axis's ~₹2,000 crore integration estimate was last repeated in its FY23 annual report; no later report refers to it or compares spending against it. I checked that page by page across all 11 documents. I also built an AI version that labels each document, but in testing it didn't return that FY23 sentence, which would have overstated the gap, so it isn't on the public page."
+
 ## 5. Locked decisions (reasons in [`docs/decision-log.md`](docs/decision-log.md))
 
 1. **Sprint scope (changed 10 Oct):** Axis–Citi in depth only. No new deals before 17 Oct.
@@ -97,6 +102,7 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
 6. Never call it a "platform" or say it "continuously tracks".
 7. Silence is not failure. Not disclosing ≠ not delivering.
 8. **Finder frozen (11 Oct, decision log row 36):** no further finder tuning before 17 Oct.
+9. **Disclosure timeline (row 31): built on dev, not shown publicly (12 Oct, row 37).** Per promise and per document, code labels each source: Restates target / Reports a figure / Mentions, no figure / Declined when asked (AI-flagged, person confirms) / No passage found by AI search. The headline "Target last referred to: <document>" is computed by code. It never sets a status and never says "silent". It isn't run for the demo: in live tests the finder did not return the FY23 AR p.109 restatement, which would move the headline to 1 Mar 2023 and overstate the gap. A reviewer can only accept or reject a finding, so a missed passage can't be fixed by hand. The public budget card shows the same finding from a hand text search instead (§4). Note for any future run: code labels deck p.15 "Restates target" (₹1,500 cr post-tax is half of the same estimate; integration-cost-evidence.md calls the 2-financial-year period a different basis) and Q4FY24 p.9 "Reports a figure" (~11% of Q4 YoY cost growth, a percentage, not rupees).
 
 ## 6. Guardrails for anyone changing the app
 
@@ -106,6 +112,7 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
 - **`#page=N` uses the PDF page index.** Annual reports can differ from printed pages, so show "printed p. X (PDF p. Y)" when they differ. Keep the page label visible as text, because iOS Safari ignores `#page`.
 - **No invented numbers.** Every number traces to a page. Label each number's assurance level: audited note, annual-report narrative, or call transcript.
 - **Ask Codex for raw test output, not summaries.** Verify prod with the read-only Convex connection after every ship.
+- **App code:** ~100 files of Phase 3–4.7 work were uncommitted as of 11 Oct night; make a local commit before any release (no push).
 
 ## 7. Next actions: 11–17 Oct (Shaktimaan's plan, adopted with Claude's edits)
 
@@ -118,10 +125,10 @@ For any AI model or person continuing this project. Last updated: **11 Oct 2026,
 4. **15 Oct, check 2 (bounded):** cards outstanding only, from RBI monthly tables (Axis, Citi, all banks around the closing date). Two-hour gate to confirm the definitions match. If they don't, publish "Not comparable on the available definitions" and stop. Never test the spend-share % with card counts.
 5. **By 15 Oct: record the demo video** (agreed guardrail), so 16–17 Oct stay free for the release.
 6. **By 14 Oct: show the dev site to 3 people** and log one comment from each (ship-check gap: zero users so far).
-7. **16 Oct:** freeze scope, recheck every number and link, rehearse with someone who doesn't know the deal, prod release.
+7. **16 Oct:** freeze scope, recheck every number and link, rehearse with someone who doesn't know the deal, prod release, then switch the HQ page to final.
 8. **17 Oct:** fix only demo blockers; backup recording.
 - **Deferred:**
-  - AI "silence timeline" (check 4)
+  - Showing the AI disclosure timeline publicly: after 17 Oct, and only once a test run returns the FY23 AR p.109 restatement (finder frozen, row 36; hidden, row 37).
   - goodwill / purchase-price allocation
   - bank-specific line-item map (`docs/forensic-extraction.md` is written for non-banks)
 - **Cap the build at about 3 hours a day.** Case-interview prep had not started as of late Sep, and cases decide placement.
@@ -151,7 +158,7 @@ Say so plainly if asked.
 |---|---|
 | This handoff and the planning docs | `~/Downloads/Work/deal-thesis-tracker` → GitHub `swapnilsagarsoren-code/deal-thesis-tracker` (public) |
 | App code | `~/build-sprint-app` (local only) |
-| Source PDFs (Axis reports, transcripts, decks) | `~/Downloads/growthxbuilddocs`; also uploaded to the claude.ai Project "M&A Tracker" (which is full) |
+| Source PDFs (Axis reports, transcripts, decks) | `~/Downloads/growthxbuilddocs`; also uploaded to the claude.ai Project "M&A Tracker" (which is full); page text for all 11 documents in `~/build-sprint-app/data/pages/*.jsonl` |
 | HQ portfolio site | `~/Downloads/Work/swapnilhq` → GitHub `swapnilhq` (private) → Vercel → hq.swapnilsoren.com |
 | Career notes | `~/Downloads/Work/Career-OS/master-repository/experience-bank/ai-products.md` (Product 4) |
 | Private notes, prod snapshot | `private/` in this folder (gitignored) |
@@ -165,10 +172,10 @@ Say so plainly if asked.
 ## Release checklist additions (11 Oct)
 - Phase 3.2 changed every passcode-protected function (including edit-save) from mutation/query to action: retest edit mode, reviewer save and finder run on dev before prod.
 - Passcode lockout is global per India hour: 10 wrong guesses lock everyone (including you) for the rest of that hour.
-- New save/seed/finder functions are locked to dev; lift deliberately on release day.
+- New save/seed/finder functions are locked to dev; lift deliberately on release day (save/seed only; finder stays dev-locked and off on prod).
 - Fill "Reviewed by" (Swapnil, date) on the reporting-basis panel after release.
 - Known small fix: FY25 section map keeps PDF 275–276 as MD&A (per contents page) though they hold the governance certificate; set MD&A end to 274 before release.
-- Methodology page section 4 ("Today there is no AI") must be updated when the finder ships; proposed wording is in the 11 Oct chat (how the AI is used, verified = words on the page, held-out 4/6, nothing public until accepted).
+- Methodology text §4 and §7 updated 12 Oct in docs/methodology.md (how the AI is used, verified = words on the page, held-out 4/6, switched off on this site, timeline not shown; "a missing disclosure" instead of "silence"). Phase 4.8 copies it into the app's methodology page.
 
 ## AI evidence finder — status 11 Oct, 18:30 IST (deployed on dev; FINDER_ENABLED still off; not on prod)
 - Built by Codex in phases 1 → 3.7; checked by Claude after each phase. Your Mac: 160/160 tests at Phase 3.6; statusRules and ledger values unchanged.
@@ -176,5 +183,6 @@ Say so plainly if asked.
 - Live-test fixes on 11 Oct: `temperature` removed (rejected for this model); thinking disabled and output cap 1,000 (replies were being cut off); rarity-weighted search; page priority changed to "top 3 by relevance + 1 slot for MD&A/notes"; one exact-copy retry on a word-for-word reject.
 - **Live scores (Haiku 5.5):** practice set (tuned on) 7/10, 8/10, 7/10; held-out set (frozen before running) 4/6 found and 3/3 correctly found no figure. Total live-test cost ≈ ₹10.
 - **Key limit:** "verified" means only "these words are on that page". No invented quote or number passed in any run, but 4 verified passages were real yet off-question (e.g. ₹1,106 cr returned for a synergy question; an analyst's question quoted as a report). Hence: a person must accept every finding.
+- **Disclosure timeline was tested only with scripted (stub) replies** (11/11 labels, `artifacts/finder/phase3-2-timeline-eval.txt`: "model accuracy not evaluated"). It has never been run live. In live runs the finder returned no FY23 restatement and its ₹217 cr quote failed the word-for-word check.
 - Cost controls: kill switch (FINDER_ENABLED off by default), passcode + dev-only, 5 runs / 60 calls / 600k tokens per day, 12 calls per run, 2-min cooldown, $5 prepaid credit with auto-reload off.
 - Run files: `~/build-sprint-app/artifacts/finder/live-eval-run*.json`.

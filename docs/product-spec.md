@@ -23,6 +23,7 @@ The check a CFO's office or integration team would run on its own deal, shown on
    - It suggests passages, and code checks every quote word for word.
    - Nothing is shown publicly until a person accepts it.
    - Test results: practice set 7–8/10; held-out set 4/6 found, and 3/3 correctly found nothing.
+   - A disclosure timeline (which document last repeats a target) is built but hidden on public cards: in live tests the finder missed the key FY23 sentence (decision log row 37). The finder is switched off on the live site.
 
 ## What it doesn't do
 
