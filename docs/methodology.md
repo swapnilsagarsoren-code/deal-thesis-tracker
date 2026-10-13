@@ -5,7 +5,7 @@ How this tracker checks Axis Bank's promises about its acquisition of Citi India
 ## What this is, and what it is not
 
 - **It is** a public-disclosure reconciliation: it puts what Axis promised at deal time next to what Axis later reported, with the exact words and page for each.
-- **It is** the kind of check a CFO's office runs on its own deal: did we deliver what we told the market?
+- **It is** the kind of check a CFO's office runs on its own deal: can the market tell whether we delivered what we promised?
 - **It is not** proof of fraud, failure or intent. Every source here except one RBI data table is prepared by Axis's management, including the audited accounts.
 - **It is not** an investment tool, and it does not track anything live. It covers one deal, checked by hand.
 
