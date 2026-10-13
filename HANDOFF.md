@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: **13 Oct 2026, ~19:30 IST**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST).
+For any AI model or person continuing this project. Last updated: **13 Oct 2026, ~21:45 IST**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST).
 
 ## 1. Who you are working with, and who does what
 
@@ -10,7 +10,7 @@ For any AI model or person continuing this project. Last updated: **13 Oct 2026,
   - **Codex (terminal)** builds the app in `~/build-sprint-app`.
   - **Shaktimaan (the GrowthX Build Sprint AI agent)** reviews the product and plans the sprint.
   - **Claude** keeps this folder, the claude.ai Project copy and the HQ site entry updated, sense-checks Codex and Shaktimaan, checks prod data (read-only Convex connection), checks claims against the source PDFs, and prepares and verifies every prod step. Claude never commits, pushes or deploys: Swapnil runs one single-line command per step.
-  - **Checker agent (Swapnil's rule, 13 Oct):** before Swapnil sees any command, finding or review, a separate checker agent (release-engineering best practice) reviews it.
+  - **Checker agent (Swapnil's rule, 13 Oct):** before Swapnil sees any command, finding or review, a separate checker agent (release-engineering best practice) reviews it. It answers three questions: are the facts right; does this already exist (live site, code, this file); is it needed for the placement story. Before proposing any addition, check the live site and code first, and label assumptions as assumptions (rule added 13 Oct after Claude proposed an "Excel synergy bridge" that the live Reporting basis panel already shows).
 - **Working style:** direct, critical, simple English, bullet points. More in `private/ai-working-notes.md` (local only).
 
 ## 2. What the product is (honest current state)
@@ -112,10 +112,10 @@ The 11–17 Oct plan is done except the items below (checks 1–3 built, RBI che
 
 1. **14 Oct: show the live site to 3 people** (Aman, Accenture CFO & EV, first) and log one comment from each. Zero so far.
 2. **15 Oct: record the 3-minute demo** (order below).
-3. **16 Oct 09:00 IST:** scheduled post-release deep check (read-only).
+3. **16 Oct 09:00 IST:** scheduled post-release deep check (read-only). It reports into the 13 Oct Claude chat where it was created, not into a newer chat.
 4. **17 Oct (sprint end):** fix only demo blockers; keep a backup recording.
 5. **By 20 Oct, methodology page:** DONE, live at /#methodology since 13 Oct.
-6. **By 25 Oct, placement assets:** resume bullet (drafts given in chat 13 Oct; needs Swapnil's rough hours and the Accenture CFO & EV job description), 2-minute story, the sharp insight (§11).
+6. **By 25 Oct, placement assets:** resume bullet (drafts given in chat 13 Oct, including a job-description keyword variant; none approved yet; needs Swapnil's rough hours; details in private notes), 2-minute story, the sharp insight (§11). Dropped 13 Oct: an "Excel synergy bridge" (the live Reporting basis panel already states "No bridge found from the CY2020 opex baseline → 30–40% target → internal six-quarter Board plan → realised saving."; most Excel cells would be "not disclosed").
 - **Deferred:**
   - Showing the AI disclosure timeline publicly: only once a test run returns the FY23 AR p.109 restatement (finder frozen, row 36; hidden, row 37).
   - goodwill / purchase-price allocation
