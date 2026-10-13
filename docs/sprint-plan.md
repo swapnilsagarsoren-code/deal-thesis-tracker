@@ -1,5 +1,7 @@
 # Sprint plan — GrowthX Build Sprint, 2–17 Oct 2026
 
+> **Superseded:** this is the original 2 Oct plan. Current state and next actions: [HANDOFF.md](../HANDOFF.md) §3 and §7. The full tracker went live on 13 Oct 2026.
+
 ## Capacity
 
 - 16 calendar days, minus Oct 10 = **~14 working days**

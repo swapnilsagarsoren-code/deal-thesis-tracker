@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: **12 Oct 2026, ~13:20 IST**.
+For any AI model or person continuing this project. Last updated: **13 Oct 2026, ~19:30 IST**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST).
 
 ## 1. Who you are working with, and who does what
 
@@ -9,7 +9,8 @@ For any AI model or person continuing this project. Last updated: **12 Oct 2026,
 - **Roles:**
   - **Codex (terminal)** builds the app in `~/build-sprint-app`.
   - **Shaktimaan (the GrowthX Build Sprint AI agent)** reviews the product and plans the sprint.
-  - **Claude** keeps this folder and the HQ site entry updated, sense-checks Codex and Shaktimaan, checks prod data (read-only Convex connection), and checks claims against the source PDFs.
+  - **Claude** keeps this folder, the claude.ai Project copy and the HQ site entry updated, sense-checks Codex and Shaktimaan, checks prod data (read-only Convex connection), checks claims against the source PDFs, and prepares and verifies every prod step. Claude never commits, pushes or deploys: Swapnil runs one single-line command per step.
+  - **Checker agent (Swapnil's rule, 13 Oct):** before Swapnil sees any command, finding or review, a separate checker agent (release-engineering best practice) reviews it.
 - **Working style:** direct, critical, simple English, bullet points. More in `private/ai-working-notes.md` (local only).
 
 ## 2. What the product is (honest current state)
@@ -18,8 +19,8 @@ For any AI model or person continuing this project. Last updated: **12 Oct 2026,
 - It takes the company's own stated promises with exact quote, page, deadline and threshold.
 - It checks later disclosures against them.
 - Fixed rules in code decide the status: Delivered / Partial / Missed / Too early / Unverifiable / No target committed.
-- **On prod today it has no AI.** Evidence is entered by hand.
-- **On dev (since 11 Oct): an AI evidence finder** (Claude Haiku 5.5). Given a promise, it suggests passages from the 11 documents.
+- **The live site (prod) has no AI.** Evidence was entered and checked by hand; the rules set every status.
+- **An AI evidence finder (Claude Haiku 5.5) exists only on dev** and is switched off by default (FINDER_ENABLED). Given a promise, it suggests passages from the 11 documents.
   - Code checks that every quote appears word for word on that page.
   - Nothing is shown publicly until a person accepts it; the rules decide the status.
   - AI never decides a status. When it finds nothing, it shows what it searched.
@@ -27,46 +28,33 @@ For any AI model or person continuing this project. Last updated: **12 Oct 2026,
 - **Positioning:** a CFO-office value-realization check, and a *public-disclosure reconciliation*. Not "forensic proof", not an investor tool, not a "platform". Detail: [`docs/product-spec.md`](docs/product-spec.md) (rewritten 11 Oct) and [`docs/design.md`](docs/design.md) (new 11 Oct).
 - **Origin:** an Accenture consultant's on-campus session (1 Aug 2026). His points: merger savings across infra/licence/people, "cite the sources", human in the loop.
 
-## 3. Where things stand (10 Oct 2026 evening; dev updates 11 Oct below)
+## 3. Where things stand (13 Oct 2026, after release)
 
-**Live app:** https://doting-zebra-426.convex.site (Convex prod `doting-zebra-426`; dev `deafening-sparrow-421`, dev URL https://deafening-sparrow-421.convex.site). React + Vite + Convex. Code is in `~/build-sprint-app` (not on GitHub; not in this folder).
-- One deal: Axis Bank buying Citi India consumer business (closed 1 Mar 2023). Two promises on prod:
+**Live app:** https://doting-zebra-426.convex.site. Convex prod `doting-zebra-426` runs commit **751f881** (released 13 Oct 17:30 IST). Dev: `deafening-sparrow-421`, https://deafening-sparrow-421.convex.site. React + Vite + Convex; code in `~/build-sprint-app` (local git only, not on GitHub).
 
-| Promise | Source | Status | "What we found" (shown to visitors) |
-|---|---|---|---|
-| Integration: "complete the full integration seamlessly within 18 months post LD1" | 1 Mar 2023 call, p.5 (start date p.16) | **Delivered** (rev 3) | Management reported completing the final customer migration on 14 Jul 2024 (Q1FY25 call p.4), before the 1 Sep 2024 deadline. Seamlessness for customers not tested. |
-| Cost savings: "30%-40% of Citi's operating expenses … over 2 years post closing" (basis CY2020 opex) | Deal presentation p.16 (closing date p.6) | **Unverifiable** (rev 1) | Management said synergies came "a bit ahead of the plan", measured against an internal six-quarter Board plan (Q4FY25 call p.13). The sources reviewed don't report the saving against the public 30–40% promise. |
+One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). What a visitor sees, in menu order:
 
-- **Shipped on 10 Oct:**
-  - Edit lock: saves need a server-side passcode in the `EDIT_PASSCODE` env var. Swapnil set it on prod and never shares it.
-  - The edit screen shows only with `?edit=1`.
-  - "Loading assessment" shows while data loads, and a retry message with no verdict if loading fails.
-  - Each source link shows document title and date, has a 44px tap area, and uses `#page=N` (all 8 links checked: printed page = PDF page for these documents).
-  - Separate citations for the promise and the start date.
-  - Prod statuses and version numbers unchanged throughout. Snapshots before each ship are in `~/build-sprint-app/artifacts/` and `private/prod-snapshot-2026-10-10-pre-ship.md`.
-- **Portfolio page live:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker (repo `swapnilhq`). Since 11 Oct evening it carries the long-form build write-up (key points, 8 sections, sources), status "In progress", and a note that the full tracker goes live on 16 Oct. No "Read the method" button until prod has the method page. On 16 Oct: remove the note, add the method button, set status "Live" (the `drafts/` copy holds the final frontmatter).
+| Section | What it shows |
+|---|---|
+| Key findings | 5 cited bullets, incl. "In April 2025, nine months after the final migration, Axis said it 'no longer separate[s] the Citi and the Axis book'." |
+| Summary | 4 promises with status badges set by the rules |
+| CFO close-out | 6 items; "1 of 6 items fully disclosed. None of the 4 items analysts asked about is fully disclosed: 1 partly disclosed, 1 declined when asked, 1 not disclosed, 1 on a different basis." |
+| Integration date | **Delivered** (management-reported), rev 4. Final migration 14 Jul 2024, about 7 weeks before the 18-month deadline (recorded as 1 Sep 2024 on this card). "Seamlessly" not tested. |
+| Cost savings | **Unverifiable**, rev 1. Reporting-basis panel: Different basis disclosed; Reviewed by Swapnil Sagar Soren, 13 Oct 2026. RBI card check: "Not comparable on the available definitions". |
+| Integration budget | **Unverifiable**, rev 1. Reconciliation: ₹1,323 cr disclosed for months 1–13 of 18; rest not disclosed. |
+| EPS/ROE | **Unverifiable**, rev 1. No reviewed document says whether it happened. |
+| Not scored | "Considered, no target committed" and "Not promises" lists |
+| Auditor check | FY23–FY26 auditor reports; a key audit matter on the deal only in FY23 |
+| Method page | https://doting-zebra-426.convex.site/#methodology |
+
+- **Prod data:** `deal` 2 rows, `additionalPromise` 2, `reportingReview` 1 (rev 2). Finder off and dev-locked on prod (FINDER_ENABLED and ANTHROPIC_API_KEY unset, no pages uploaded).
+- **Backups:** `~/build-sprint-app/artifacts/prod-backup-2026-10-13-pre-release.zip`, `-post-release.zip`, `-post-gate2.zip`. **Last stable state = commit 751f881 + `prod-backup-2026-10-13-post-gate2.zip`.**
+- **Checks at release:** Mac tests 250/250; live check PASS with all 30 source links HTTP 200; 390px and 1440px: no page scroll, no console errors, 9 menu items, no edit button.
+- **HQ page:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker, status Live, with a "Read the method" button (swapnilhq 1d144cc).
 - **Old mockup:** https://deal-thesis-tracker.vercel.app. Superseded; not linked anywhere new.
+- **History:** 10 Oct first release (2 promises, edit lock, loading and retry states). 11–12 Oct on dev: 2 more promises, reporting basis, integration-cost panel, Phases 4.0–4.13 (summary, key findings, menu, close-out, RBI, auditor, methodology, mobile). 13 Oct: Phase 5.0 release. Detail: release log below and the decision log.
 
-- **11 Oct, on dev only (not on prod):**
-  - Two more promises, both **Unverifiable** via the unchanged status rules: integration budget ("Rs 2,000 crores pre-tax … over 18 months period", call p.8) and EPS/ROE accretion ("EPS & ROE accretive in CY24", deck p.5).
-  - Reporting-basis panel for cost savings: overall **Different basis disclosed** (6 rows: metric, size, baseline, perimeter, period, measured-against), missing bridge, documents searched, blank reviewer fields.
-  - "Considered — no target committed" list and "Not promises — closing-date pro forma figures" list.
-  - Annual-report links FY23–FY26 verified (HTTP 200, page counts 376/466/504/520, cited text on cited page). Offsets: FY23 printed = PDF − 2; FY24/FY25 printed = PDF; FY26 printed = PDF + 1.
-  - Stored in two NEW tables (`additionalPromise`, `reportingReview`); `deal` table and `shared/statusRules.ts` untouched. New save functions need the passcode and are locked to dev — that lock must be changed deliberately on prod release day.
-  - Gotcha: a daily cron rewrites `assessment.asOf` on the `deal` rows at midnight IST. Snapshot comparisons must ignore that one field.
-  - Integration-cost panel: ₹1,323 crore "Disclosed, months 1–13 of 18", no variance, exclusions collapsed.
-  - **Phase 4.0–4.7 polish (deployed and seeded on dev, 11 Oct evening):**
-    - Top summary table "What was promised vs what was reported" (4 rows, status badges from the rules), then the one-line finding: "1 delivered (management-reported), 3 cannot be verified from Axis's public sources…".
-    - Integration threshold now "complete the full integration" (exact substring), with "'Seamlessly': not tested" shown; promise quote trimmed of "And number five,". Status still Delivered.
-    - Integration-budget card: target "~₹2,000 crore pre-tax over 18 months (an estimate, not a cap)", deadline 31 Aug 2024, reported "₹1,323 crore for months 1–13; months 14–18 not disclosed", measured as of 31 Mar 2024, analyst refusal cited (Q1FY25 p.18). Status Unverifiable.
-    - EPS/ROE card: "No reviewed document (annual reports FY24–FY26, Q4FY24–Q4FY25 calls) states whether the acquisition was EPS or ROE accretive…". Verified by text search: every "accretion" hit in those documents is about CET1 capital or deposits.
-    - Auditor table shown once; empty finder timelines replaced by "Evidence finder: not run for this promise."; one date format.
-    - Key findings (5 bullets), 8-item menu with click lock and scroll tracking, iOS-style section picker on phones, stacked tables on phones (Phases 4.5–4.7).
-  - **Decision (11 Oct, superseded 13 Oct by decision-log row 40): prod release waits until 16 Oct**, together with the final recheck of numbers and links. Release = snapshot prod → lift the dev-only lock on the new save/seed functions (passcode stays) → deploy → seed prod → snapshot → check live page at 390px/1440px. An early release on 11 Oct was considered and declined (too many steps); the Phase 5.0 release prompt drafted in chat on 11 Oct is the checklist for 16 Oct.
-  - **Decision (11 Oct): reviewer = Swapnil for now**; fill name/date on prod via `?edit=1` after release. Swap in a second reviewer if one becomes available.
-- **12 Oct (dev only): Phase 4.8** hides the finder/timeline section on public cards behind a flag (edit mode unchanged), adds one cited sentence to the integration-budget card ("The ~₹2,000 crore estimate is last repeated in the FY23 annual report (PDF p. 109). No later document reviewed refers to it or compares spending against it.") and syncs the methodology page §4/§7 text.
-
-**Honest weakness (Swapnil's own view, agreed):** so far it compares management's words with management's words. The fix is to test claims against evidence management doesn't control in the same way: annual-report figures, regulator data, and what management declined to disclose.
+**Honest weakness (Swapnil's own view, agreed):** most of it still compares management's words with management's words. Partly addressed by the RBI check (regulator data) and the auditor check; the rest is Axis's own reporting.
 
 ## 4. Findings so far (verified against the PDFs)
 
@@ -113,32 +101,33 @@ For any AI model or person continuing this project. Last updated: **12 Oct 2026,
 - **`#page=N` uses the PDF page index.** Annual reports can differ from printed pages, so show "printed p. X (PDF p. Y)" when they differ. Keep the page label visible as text, because iOS Safari ignores `#page`.
 - **No invented numbers.** Every number traces to a page. Label each number's assurance level: audited note, annual-report narrative, or call transcript.
 - **Ask Codex for raw test output, not summaries.** Verify prod with the read-only Convex connection after every ship.
-- **App code:** ~100 files of Phase 3–4.7 work were uncommitted as of 11 Oct night; make a local commit before any release (no push).
+- **Shipping a fix to prod (runbook, 13 Oct):** (1) Codex makes the change; Swapnil's Mac shows fail 0; commit. (2) `npm run deploy:dev`, then `node scripts/check-live.mjs https://deafening-sparrow-421.convex.site`. (3) Fresh prod backup: `npx convex export --include-file-storage --path artifacts/prod-backup-<date>-<label>.zip --deployment doting-zebra-426`. (4) Prod deploy: `CONVEX_DEPLOYMENT=prod:doting-zebra-426 npm run deploy < /dev/null` (without that setting Convex asks "push to prod?" and fails). (5) `node scripts/check-live.mjs https://doting-zebra-426.convex.site`. (6) Change prod data only through an idempotent script with a dry run, or through `?edit=1`. (7) Record the new prod commit and backup as the last stable state. The checker agent reviews each command first.
+- **Rollback:** code first: check out the last stable commit and run the prod deploy command from step 4. Then, only if records are wrong: `npx convex import --replace --yes --deployment doting-zebra-426 <backup zip>` (restores the zip's tables, including the page files).
+- **Passcode location:** Convex env var `EDIT_PASSCODE` on each deployment (dashboard → deployment → Settings → Environment Variables, or `npx convex env get EDIT_PASSCODE --deployment <name>`). Copy it, don't type it from memory: 10 wrong tries in one India hour lock all edits.
+- **Daily cron:** rewrites `assessment.asOf` on the `deal` rows at midnight IST. Ignore that field when comparing snapshots.
 
-## 7. Next actions: 11–17 Oct (Shaktimaan's plan, adopted with Claude's edits)
+## 7. Next actions (from 13 Oct, after release)
 
-1. **DONE 11 Oct:** research questions and source inventory frozen; retrospective sequence written (methodology §6).
-2. **DONE 10–11 Oct (on dev) — check 3 (basis comparison):**
-   - Put the public 30–40% promise next to the internal-plan statement.
-   - For each, record metric, denominator, business perimeter, baseline, period and deadline.
-   - Output: "Different basis disclosed", plus the CFO action: ask the synergy owner for the bridge from public baseline → internal plan → realised saving.
-3. **DONE 11 Oct (on dev) — check 1 (integration-cost reconciliation).** Panel built and seeded; findings in docs/integration-cost-evidence.md. Still open: whether TSA costs are inside ₹1,106 cr (not confirmed by the annual reports).
-4. **15 Oct, check 2 (bounded):** cards outstanding only, from RBI monthly tables (Axis, Citi, all banks around the closing date). Two-hour gate to confirm the definitions match. If they don't, publish "Not comparable on the available definitions" and stop. Never test the spend-share % with card counts.
-5. **By 15 Oct: record the demo video** (agreed guardrail), so 16–17 Oct stay free for the release.
-6. **By 14 Oct: show the dev site to 3 people** and log one comment from each (ship-check gap: zero users so far).
-7. **16 Oct:** freeze scope, recheck every number and link, rehearse with someone who doesn't know the deal, prod release, then switch the HQ page to final.
-8. **17 Oct:** fix only demo blockers; backup recording.
+The 11–17 Oct plan is done except the items below (checks 1–3 built, RBI check published as "Not comparable", release done on 13 Oct instead of 16 Oct).
+
+1. **14 Oct: show the live site to 3 people** (Aman, Accenture CFO & EV, first) and log one comment from each. Zero so far.
+2. **15 Oct: record the 3-minute demo** (order below).
+3. **16 Oct 09:00 IST:** scheduled post-release deep check (read-only).
+4. **17 Oct (sprint end):** fix only demo blockers; keep a backup recording.
+5. **By 20 Oct, methodology page:** DONE, live at /#methodology since 13 Oct.
+6. **By 25 Oct, placement assets:** resume bullet (drafts given in chat 13 Oct; needs Swapnil's rough hours and the Accenture CFO & EV job description), 2-minute story, the sharp insight (§11).
 - **Deferred:**
-  - Showing the AI disclosure timeline publicly: after 17 Oct, and only once a test run returns the FY23 AR p.109 restatement (finder frozen, row 36; hidden, row 37).
+  - Showing the AI disclosure timeline publicly: only once a test run returns the FY23 AR p.109 restatement (finder frozen, row 36; hidden, row 37).
   - goodwill / purchase-price allocation
   - bank-specific line-item map (`docs/forensic-extraction.md` is written for non-banks)
-- **Cap the build at about 3 hours a day.** Case-interview prep had not started as of late Sep, and cases decide placement.
+  - other deals, live search, Forensic Scorecard, payments
+- **Cap the build at about 3 hours a day.** Case-interview prep comes first.
 
 **3-minute demo order:**
 1. Who needs this.
 2. The public promise vs the internal-plan claim.
 3. The cost table with assurance labels.
-4. The RBI comparison, or why it was rejected.
+4. The RBI comparison, and why it is "Not comparable".
 5. Open a citation and show the fixed rule.
 6. The CFO action and the limit of the conclusion.
 
@@ -158,7 +147,11 @@ Say so plainly if asked.
 | Thing | Location |
 |---|---|
 | This handoff and the planning docs | `~/Downloads/Work/deal-thesis-tracker` → GitHub `swapnilsagarsoren-code/deal-thesis-tracker` (public) |
-| App code | `~/build-sprint-app` (local only) |
+| App code | `~/build-sprint-app` (local git only; prod runs 751f881) |
+| Prod backups | `~/build-sprint-app/artifacts/prod-backup-2026-10-13-*.zip` |
+| Release scripts | `~/build-sprint-app/scripts/prod-backup.mjs`, `seed-prod.mjs`, `rehearse-restore-dev.mjs`, `check-live.mjs` |
+| Edit passcode | Convex env var `EDIT_PASSCODE` per deployment (never in files or chat) |
+| Scheduled check | claude.ai scheduled task, 16 Oct 09:00 IST post-release check |
 | Source PDFs (Axis reports, transcripts, decks) | `~/Downloads/growthxbuilddocs`; also uploaded to the claude.ai Project "M&A Tracker" (which is full); page text for all 11 documents in `~/build-sprint-app/data/pages/*.jsonl` |
 | HQ portfolio site | `~/Downloads/Work/swapnilhq` → GitHub `swapnilhq` (private) → Vercel → hq.swapnilsoren.com |
 | Career notes | `~/Downloads/Work/Career-OS/master-repository/experience-bank/ai-products.md` (Product 4) |
@@ -170,24 +163,35 @@ Say so plainly if asked.
 
 `private/` holds working style, goals, outreach contacts (send the demo to the Accenture contact only once it works) and calendar constraints. Not in the public repo.
 
-## Release checklist additions (11 Oct)
+## 11. Placement story (checked against the sources 13 Oct)
+
+- **What it is, in one line:** a public check of whether Axis Bank delivered what it promised when it bought Citi India's consumer business: 4 promises in Axis's own words, tested against 11 Axis documents, every number with a page, statuses set by fixed rules.
+- **The sharp insight:** *the promise was public; the scorecard became private.* The 30–40% cost-saving target was public; success was later reported against an internal six-quarter Board plan (Q4FY25 call p.13), and in April 2025 Axis said it "no longer separate[s] the Citi and the Axis book". A different basis, not a miss.
+- **30-second version:** "After a deal, the CFO promises savings, timelines and costs, and almost nobody checks later. I took Axis Bank's purchase of Citi's India consumer business and tested 4 promises against 11 of Axis's own filings and calls. Axis says integration finished early. But only ₹1,323 crore of a roughly ₹2,000 crore cost estimate was ever disclosed, and savings were judged against an internal Board plan, not the public 30–40% target. So 3 of 4 promises are honestly 'Unverifiable'. That's the gap a CFO office should close for its own deals."
+- **Why the live site has no AI:** "I built the AI, measured it, and decided where it's safe." The finder found 4 of 6 passages on a small held-out test; no invented quote passed the word-for-word check; but 4 real passages were off-question, and the timeline missed the FY23 p.109 sentence, which would have overstated the gap. So AI finds, a person confirms, rules decide.
+- **What it proves:** turning a CFO question into testable claims; reading bank disclosures to the page; separating promise from later reporting; testing an AI tool and making a go/no-go call; shipping with release controls (tests, backups, rollback).
+- **What it doesn't prove:** that Axis missed anything; coding skill (Codex wrote the code; Swapnil designed it, set the rules, reviewed and tested every release); that the method scales to many deals; client impact.
+- **Never claim:** "AI-powered", "forensic", "platform", "tracks M&A deals", "Axis missed/failed", "66% of budget spent" (it's an estimate and management narrative, not audited), or that Swapnil coded it.
+- **Resume bullets:** drafts (finance-led and build-led, X-Y-Z) were given in chat on 13 Oct, pending Swapnil's rough hours and the job description. Approved wording goes to Career-OS, not here.
+
+## Release log (11–13 Oct)
 - **13 Oct status.** Phase 4.11 committed a1d568d; Phase 4.12 (methodology RBI exception + §5 close-out/regulator items + sources; close-out employee-retention line, FY23 AR printed p.31 / PDF p.33 and Q4FY25 p.13) committed 9422c7f; Phase 4.13 (Key findings date wording; 'unchanged' tests now compare to fixed baselines edcdc88/a1d568d instead of HEAD, after a compare-to-HEAD test broke once 4.12 was committed) committed 42908bd — Mac 240/240. Docs repo pushed 16e1cef. docs/methodology.md and the project copy synced to the site 13 Oct.
 - **13 Oct (later): release moved up (decision-log row 40).** Release as soon as Phase 5.0 passes Gate 1; Integration may go rev 3 → 4 (text only, status Delivered locked). Rollback plan (to be added to Phase 5.0 and rehearsed on dev): (1) code: redeploy the previous prod commit (today 8c3fce7) with `CONVEX_DEPLOYMENT=prod:doting-zebra-426 npm run deploy < /dev/null`; its schema accepts the patched deal rows (deal/evidence validators unchanged since 8c3fce7) and Convex ignores tables not in the schema, so the new additionalPromise/reportingReview rows do not block it; (2) data: `npx convex export --include-file-storage --deployment doting-zebra-426 --path <zip>` before any prod write, restore with `npx convex import --replace --yes --deployment doting-zebra-426 <zip>` after the code rollback (only tables in the zip are touched; the zip also holds the old page files); (3) HQ page: revert the commit or use Vercel's rollback. 'Last stable state' moves forward with each release: record the prod commit and take a fresh export before every later prod write. No restore tool existed before this; only artifacts/release-prep/prod-deal-fresh.json (read-only copy of the 2 deal rows, 13 Oct 11:19).
 - **RELEASED 13 Oct 17:30 IST (Phase 5.0).** Prod = commit 751f881. First seed attempt refused ("Wrong passcode. Nothing was saved.", 1 failure in hour 17); for ~14 min the new page showed "No evidence recorded yet" on the 2 new promises. Finished with the passcode read from Convex env (no typing). Verified: seed PASS (deal Integration rev 3→4 same _id, status Delivered; Cost savings unchanged; 2 additionalPromise + 1 reportingReview rows, content equal to dev); check-live PASS with 30 sources HTTP 200; 390px/1440px no page scroll, no console errors, 9 menu items, no edit button; finder off on prod (FINDER_ENABLED and ANTHROPIC_API_KEY unset, no pages). Backups: artifacts/prod-backup-2026-10-13-pre-release.zip and -post-release.zip. Reviewed independently by a checker agent (Swapnil's rule from 13 Oct: a checker agent reviews every command and finding before it is shown). Gate 2 done 17:45 IST: Reviewed by "Swapnil Sagar Soren", 2026-10-13 (reportingReview rev 2). **Last stable state = commit 751f881 + artifacts/prod-backup-2026-10-13-post-gate2.zip.** HQ page switched to Live 13 Oct (status Live, "Read the method" button, finder-off sentence kept, "trail goes quiet" → "which numbers stopped being disclosed, and when"). The edit passcode is the Convex env var EDIT_PASSCODE on each deployment (dashboard → Settings → Environment Variables); Read it from there (or copy it with `npx convex env get`) instead of typing from memory: one wrong passcode refused the first seed attempt and 2 more were refused during Gate 2. 16 Oct 09:00 scheduled task now runs a post-release check on prod.
 - **Prod deploy command (learned 13 Oct 17:14):** `npm run deploy` reads CONVEX_DEPLOYMENT from .env.local (dev), so Convex asks "push to prod?" and fails when not interactive. Always run prod deploys (release, fixes and the code rollback) as `CONVEX_DEPLOYMENT=prod:doting-zebra-426 npm run deploy < /dev/null`, the same setting scripts/ship-portfolio.mjs used on 10 Oct. First LINE B attempt failed at that prompt before anything was pushed; prod checked afterwards: still the 8c3fce7 page (index-bHOgC1s5.js), 2 promises. Release commit 751f881; pre-release backup artifacts/prod-backup-2026-10-13-pre-release.zip.
 - **Deep check 13 Oct (parts 1+2): no blockers.** 25 annual-report figures re-verified on an independent extraction; negative claims hold (no EPS/ROE accretion statement FY24–FY26, ~₹2,000 cr only in FY23, no rupee synergy figure). Prod: Integration Delivered rev 3, Cost savings Unverifiable rev 1, additionalPromise/reportingReview empty (release adds them). Dev page at 390px and 1440px: no horizontal scroll, 9-item menu/picker, no console errors, no stuck loading, taps ≥44px. HQ claim "key audit matter only in FY23" holds (FY23 standalone AR PDF p.212). Fixed from it: methodology self-contradiction, employee-retention disclosure, "a year after" → "nine months after" (Q4FY25 call 25 Apr 2025 vs final migration 14 Jul 2024).
-- **Open from deep check:** (a) FIXED 13 Oct (swapnilhq 4c2e830, live): HQ note no longer says the AI evidence finder goes live; it now lists the CFO close-out and RBI checks and says the finder stays switched off. DONE 13 Oct after release: note replaced by the finder-off sentence, "Read the method" button added, status "Live", "trail goes quiet" reworded. (b) Note: Key-findings source strip on phones scrolls sideways (scrollbar visible). (c) Note: FY23 AR p.119 "12.1 million cards in force" matches RBI Mar 2023 12,127,172; FY23 AR p.20 "ROE accretive post integration" is a third accretion wording. (d) Source links last opened 10–11 Oct; re-test 16 Oct in the built-in browser (device shell cannot reach axis.bank.in).
+- **Open from deep check:** (a) FIXED 13 Oct (swapnilhq 4c2e830, live): HQ note no longer says the AI evidence finder goes live; it now lists the CFO close-out and RBI checks and says the finder stays switched off. DONE 13 Oct after release: note replaced by the finder-off sentence, "Read the method" button added, status "Live", "trail goes quiet" reworded. (b) Note: Key-findings source strip on phones scrolls sideways (scrollbar visible). (c) Note: FY23 AR p.119 "12.1 million cards in force" matches RBI Mar 2023 12,127,172; FY23 AR p.20 "ROE accretive post integration" is a third accretion wording. (d) Source links re-tested 13 Oct on prod: all 30 return HTTP 200 (check-live). (e) Note (13 Oct): the same 18-month window shows as deadline 1 Sep 2024 on the integration card and 31 Aug 2024 on the integration-budget card. Both are defensible readings of "within 18 months" from 1 Mar 2023; align them in a later fix (no status changes).
 - **Next (after release, 13 Oct):** show the live site to 3 people (due 14 Oct); record the demo by 15 Oct; placement assets (resume bullet needs Swapnil's rough hours, 2-min story, one sharp insight) by 25 Oct; 16 Oct 09:00 IST post-release check. Release docs pushed to the public repo with Swapnil's OK on 13 Oct.
-- **Deep debugging check (added 12 Oct at Swapnil's request; run 13 Oct 10:00 IST, re-run 16 Oct before release).** Read-only, findings ranked blocker / fix before 16 Oct / note: (1) every quote, number and page on the site re-verified against data/pages/*.jsonl and RBI pages; (2) each status recomputed from stored evidence with statusRules.ts; (3) prod vs dev read-only snapshot diff; (4) every source link 200 with cited text on the cited page; (5) site-wide wording audit (no platform / forensic proof / continuously tracks / failed / silent / goalposts / red flag); (6) test honesty: Mac fail 0, no skipped or mocked tests, Chrome actually launches; (7) dev page at 390px and 1440px incl. loading and failure states (no verdict), 9-item menu, no horizontal scroll, 44px taps; (8) no secrets in repo or history, finder off and dev-locked on prod; (9) HANDOFF, decision log, methodology, HQ page and interview lines agree; (10) clean tree, no lock files, prod rollback hash recorded. Fixes go to Codex as one prompt ending with the one-line test→deploy→commit command.
+- **Deep debugging check (added 12 Oct at Swapnil's request; run 13 Oct 10:00 IST; re-run 16 Oct as a post-release check).** Read-only, findings ranked blocker / fix before 16 Oct / note: (1) every quote, number and page on the site re-verified against data/pages/*.jsonl and RBI pages; (2) each status recomputed from stored evidence with statusRules.ts; (3) prod vs dev read-only snapshot diff; (4) every source link 200 with cited text on the cited page; (5) site-wide wording audit (no platform / forensic proof / continuously tracks / failed / silent / goalposts / red flag); (6) test honesty: Mac fail 0, no skipped or mocked tests, Chrome actually launches; (7) dev page at 390px and 1440px incl. loading and failure states (no verdict), 9-item menu, no horizontal scroll, 44px taps; (8) no secrets in repo or history, finder off and dev-locked on prod; (9) HANDOFF, decision log, methodology, HQ page and interview lines agree; (10) clean tree, no lock files, prod rollback hash recorded. Fixes go to Codex as one prompt ending with the one-line test→deploy→commit command.
 - Phase 4.9.1 committed 435022d (first full Mac run: 228/228 incl. real-browser test). Phase 4.10 RBI card-transfer panel committed 683778d (row 39). Phase 4.11 pre-release fixes prompt issued 12 Oct.
 - **Tests count only on Swapnil's Mac (added 12 Oct).** Codex's sandbox cannot launch Chrome, so the real-browser test (tests/navigationBrowser.test.ts) silently failed to launch in every Codex run from at least Phase 4.7 to 4.9 (artifacts/phase4-7*, phase4-8 test-output.txt). First real run on the Mac (12 Oct, after 4.9) found a back-to-contents bug: replaceState(pathname+search) throws on an about:blank origin. Visitor impact: none on the real https site. Fixed in Phase 4.9.1 (href without hash). Release gate: `npm test 2>&1 | grep -E "(tests|pass|fail) [0-9]+"` on the Mac must show fail 0 (Mac Node prints 'ℹ tests', not '# tests').
 - Phase 4.8 committed cdf7d18; Phase 4.9 (CFO close-out, row 38) committed 5351fb9 and deployed to dev 12 Oct. Claude corrected one 4.9 citation before deploy: synergy 'internal Board plan' line now cites management's answer (Q4FY25 p.13 "synergy benefits that we internally presented to the Board", "we came a bit ahead of the plan"), not the analyst's question.
-- Small 4.9 risk to fix before 16 Oct: CloseOut Citation throws if a source URL is missing (whole page would fail to render); show "source unavailable" instead.
-- Phase 3.2 changed every passcode-protected function (including edit-save) from mutation/query to action: retest edit mode, reviewer save and finder run on dev before prod.
+- DONE in Phase 4.11 (a1d568d): CloseOut Citation threw if a source URL is missing (whole page would fail to render); show "source unavailable" instead.
+- Phase 3.2 changed every passcode-protected function (including edit-save) from mutation/query to action. Reviewer save confirmed working on prod 13 Oct (Gate 2).
 - Passcode lockout is global per India hour: 10 wrong guesses lock everyone (including you) for the rest of that hour.
-- New save/seed/finder functions are locked to dev; lift deliberately on release day (save/seed only; finder stays dev-locked and off on prod).
-- Fill "Reviewed by" (Swapnil, date) on the reporting-basis panel after release.
-- Known small fix: FY25 section map keeps PDF 275–276 as MD&A (per contents page) though they hold the governance certificate; set MD&A end to 274 before release.
+- DONE 13 Oct (Phase 5.0): the dev-only lock was lifted on the save/seed functions (passcode kept); the finder stays dev-locked and off on prod.
+- DONE 13 Oct: "Reviewed by" filled on prod (Swapnil Sagar Soren, 2026-10-13).
+- DONE in Phase 4.11: FY25 section map kept PDF 275–276 as MD&A (per contents page) though they hold the governance certificate; set MD&A end to 274 before release.
 - Methodology text §4 and §7 updated 12 Oct in docs/methodology.md (how the AI is used, verified = words on the page, held-out 4/6, switched off on this site, timeline not shown; "a missing disclosure" instead of "silence"). Phase 4.8 copies it into the app's methodology page.
 
 ## AI evidence finder — status 11 Oct, 18:30 IST (deployed on dev; FINDER_ENABLED still off; not on prod)
@@ -204,19 +208,7 @@ Say so plainly if asked.
 
 - **Phase 4.8:** done. Deployed to dev, committed cdf7d18.
 - **Phase 4.9 (CFO close-out):** done. Built from the corrected prompt written in chat on 12 Oct (an older draft with the headline "The items analysts asked about most are the least disclosed" was dropped as unsupported). Deployed to dev, committed 5351fb9. Content in ~/build-sprint-app/shared/closeOutContent.ts.
-- **Phase 4.9.1:** back-to-contents URL reset uses href without hash (fixes the real-browser test on about:blank). Applied by Codex 12 Oct; commit pending at time of writing.
+- **Phase 4.9.1:** back-to-contents URL reset uses href without hash (fixes the real-browser test on about:blank). Committed 435022d.
 
-### Phase 5.0 — prod release checklist for 16 Oct (drafted 11 Oct; updated 12 Oct for 4.8/4.9/4.9.1)
-```
-PHASE 5.0 — PROD RELEASE PREP. You PREPARE and CHECK; Swapnil runs the prod-writing commands. STOP at the two gates.
-HARD RULES: no change to shared/statusRules.ts; never print/log/commit EDIT_PASSCODE or API keys; no push/merge; no git write commands (Swapnil commits); finder stays OFF on prod (do NOT lift the dev-only lock on convex/finder.ts, finderReviewRead.ts, shared/finderLimits.ts, finderPageUpload.ts; do not set FINDER_ENABLED or ANTHROPIC_API_KEY on prod; do not upload pages to prod). Existing prod statuses must not change: Integration = Delivered (rev 3), Cost savings = Unverifiable (rev 1) — STOP if any step would change them. Ignore assessment.asOf in snapshot comparisons.
-STEP 1 Rollback point: confirm the tree is committed (Swapnil commits); record the hash currently live on prod (8c3fce7) as rollback target.
-STEP 2 Fix: FY25 section map MD&A end page = 274 (+ test). Confirm Methodology.tsx has the 4.8 text. npm test + npm run build, RAW output. The real-browser test cannot run in your sandbox; say so. GATE: Swapnil's Mac must show fail 0 (`npm test 2>&1 | grep -E "(tests|pass|fail) [0-9]+"`).
-STEP 3 Read-only full prod snapshot → artifacts/prod-snapshot-<date>-pre-release.json; print row counts and each deal promise's status + revision.
-STEP 4 Lift dev-only lock on non-finder save/seed functions (additionalPromises.ts, reportingReview.ts, seedPromptA.ts, others) keeping the passcode check; list file:line of each change; add a test proving finder functions still refuse on non-dev.
-STEP 5 scripts/seed-prompt-a-prod.mjs (flag --approved-prod-write; idempotent; refuses any status/revision change; prints dry-run diff table/row/field before → after). List every EXISTING prod field that will change. Rehearse twice on an exact copy of the prod snapshot (as rehearse-portfolio-migration.mjs); RAW output. (The CFO close-out section is static code: no seed rows.)
-GATE 1 — STOP. Print commit + rollback hashes, RAW test/build output, rehearsal diff, lock changes, and the EXACT commands Swapnil runs in tab 2 (prod deploy incl. static hosting; seed dry run; seed write; passcode via hidden prompt only).
-STEP 6 After "released": post-release snapshot; diff vs pre (statuses/revisions unchanged; new rows only in additionalPromise/reportingReview; only listed fields changed); scripts/check-live.mjs on https://doting-zebra-426.convex.site (4 promises, summary, CFO close-out section with headline "1 of 6 items fully disclosed. None of the 4 items analysts asked about is fully disclosed: …", key findings, 9 menu items, auditor table, methodology §4 new text, no stuck Loading, all source links 200). RAW output.
-GATE 2 — STOP. Swapnil fills "Reviewed by" via ?edit=1.
-```
-After release: switch the HQ page (remove the 16 Oct note, add methodLink https://doting-zebra-426.convex.site/#methodology "Read the method", status "Live"), rotate the Anthropic key.
+### Phase 5.0 — prod release: DONE 13 Oct
+Executed with a rollback addendum (backup before any prod write, restore rehearsed twice on dev). Record: release log above and decision-log row 40. Scripts in the app: `scripts/prod-backup.mjs` (backup check), `scripts/seed-prod.mjs` (dry run by default; `--approved-prod-write` to write), `scripts/rehearse-restore-dev.mjs` (dev only), `scripts/check-live.mjs`. For later fixes use the runbook in §6.

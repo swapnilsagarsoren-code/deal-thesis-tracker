@@ -1,5 +1,7 @@
 # Deals
 
+> **Superseded on 10 Oct 2026:** scope was cut to Axis × Citi only (decision log rows 24–25). Kept as the original shortlist.
+
 Last synced from Career-OS `experience-bank/ai-products.md` on 28 Sep 2026; scope updated 2 Oct 2026.
 
 ## Selection rule

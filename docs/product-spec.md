@@ -1,10 +1,10 @@
 # Product spec — M&A Value Realization Tracker (India)
 
-*Current as of 11 Oct 2026.*
+*Current as of 13 Oct 2026. Live since 13 Oct: https://doting-zebra-426.convex.site.*
 
 ## Problem
 
-After a deal, management promises value. Later reporting often drops the promise, changes its basis, or goes quiet. Few people line up the promise against what was actually reported.
+After a deal, management promises value. Later reporting often drops the promise, changes its basis, or stops reporting it. Few people line up the promise against what was actually reported.
 
 ## Who it is for
 

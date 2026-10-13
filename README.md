@@ -10,9 +10,9 @@ It is the check a CFO's office runs on its own deal after closing. It is a publi
 4. Lets fixed rules in code set the status. AI never decides a status.
 5. Shows gaps as gaps: "Unverifiable", "Different basis disclosed", "not disclosed". Never "failed" when data is missing.
 
-## Status (12 Oct 2026)
+## Status (13 Oct 2026)
 
-- **Live tracker:** https://doting-zebra-426.convex.site. This is the first release (integration and cost-savings checks). The full version, with all 4 promises, the method page and the auditor check, goes live on 16 Oct 2026.
+- **Live tracker (full version, released 13 Oct 2026):** https://doting-zebra-426.convex.site. All 4 promises, the CFO close-out check, the RBI card-data check, the auditor check and the [method page](https://doting-zebra-426.convex.site/#methodology). The AI evidence finder is switched off on the live site.
 - **Build write-up:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker
 - **Built during** the GrowthX Build Sprint, 2–17 Oct 2026. Scope was cut from 4–5 deals to one deal in depth on 10 Oct (decision log rows 24–25).
 - **The review is retrospective**, not outcome-blind: the deal was chosen and its results read in the same period ([methodology §6](docs/methodology.md)).
@@ -25,6 +25,9 @@ It is the check a CFO's office runs on its own deal after closing. It is a publi
 | Save 30–40% of Citi's operating costs within 2 years | Unverifiable | Success was later measured against an internal Board plan, not the public promise. Different basis disclosed. |
 | Integration cost of ~₹2,000 crore over 18 months | Unverifiable | ₹1,323 crore disclosed for months 1–13; months 14–18 not disclosed. The estimate is last repeated in the FY23 annual report. |
 | EPS and ROE accretive in CY24 | Unverifiable | No reviewed document says whether it happened. |
+
+- **CFO close-out check:** 1 of 6 items a CFO's office needs to close out the deal is fully disclosed. None of the 4 items analysts asked about is fully disclosed.
+- **RBI card data:** Citi's and Axis's card counts around the March 2023 transfer are shown, labelled "Not comparable on the available definitions".
 
 ## Who does what
 
