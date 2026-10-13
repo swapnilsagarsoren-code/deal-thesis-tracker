@@ -2,6 +2,8 @@
 
 > **Superseded on 10 Oct 2026:** scope was cut to Axis × Citi only (decision log rows 24–25). Kept as the original shortlist.
 
+> **13 Oct 2026:** if other deals are ever added, they will be picked by a new written selection rule, not from this list. If any deal below is used, disclose that its outcome was already seen: Zomato–Blinkit (break-even date passed), RateGain–Sojern (an FY26 result is noted below with no source page), Hindalco/Novelis–Aleris ($79M by FY21). The "Sprint scope: 4 deals" line below is history.
+
 Last synced from Career-OS `experience-bank/ai-products.md` on 28 Sep 2026; scope updated 2 Oct 2026.
 
 ## Selection rule

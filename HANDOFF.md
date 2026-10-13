@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: **13 Oct 2026, ~21:45 IST**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST).
+For any AI model or person continuing this project. Last updated: **14 Oct 2026, ~00:15 IST**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST). **Framing changed 13 Oct (decision log row 41):** "can anyone outside tell whether the acquirer delivered?"
 
 ## 1. Who you are working with, and who does what
 
@@ -15,7 +15,7 @@ For any AI model or person continuing this project. Last updated: **13 Oct 2026,
 
 ## 2. What the product is (honest current state)
 
-**M&A Value Realization Tracker (India).** It checks whether an Indian acquirer delivered what it publicly promised in a deal.
+**M&A Value Realization Tracker (India).** It checks whether anyone outside can tell if an Indian acquirer delivered what it publicly promised in a deal, using the company's own documents.
 - It takes the company's own stated promises with exact quote, page, deadline and threshold.
 - It checks later disclosures against them.
 - Fixed rules in code decide the status: Delivered / Partial / Missed / Too early / Unverifiable / No target committed.
@@ -25,6 +25,7 @@ For any AI model or person continuing this project. Last updated: **13 Oct 2026,
   - Nothing is shown publicly until a person accepts it; the rules decide the status.
   - AI never decides a status. When it finds nothing, it shows what it searched.
   - Live test results and limits: see the finder section at the end.
+- **Framing (Swapnil, 13 Oct; decision log row 41):** the question is "can anyone outside tell whether the acquirer delivered what it promised?", not "did it deliver?". The main finding is the missing bridge between the number announced and the number later tracked. Asked for the CFO's office: what can the market check about our deal? Name unchanged.
 - **Positioning:** a CFO-office value-realization check, and a *public-disclosure reconciliation*. Not "forensic proof", not an investor tool, not a "platform". Detail: [`docs/product-spec.md`](docs/product-spec.md) (rewritten 11 Oct) and [`docs/design.md`](docs/design.md) (new 11 Oct).
 - **Origin:** an Accenture consultant's on-campus session (1 Aug 2026). His points: merger savings across infra/licence/people, "cite the sources", human in the loop.
 
@@ -54,7 +55,7 @@ One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). W
 - **Old mockup:** https://deal-thesis-tracker.vercel.app. Superseded; not linked anywhere new.
 - **History:** 10 Oct first release (2 promises, edit lock, loading and retry states). 11–12 Oct on dev: 2 more promises, reporting basis, integration-cost panel, Phases 4.0–4.13 (summary, key findings, menu, close-out, RBI, auditor, methodology, mobile). 13 Oct: Phase 5.0 release. Detail: release log below and the decision log.
 
-**Honest weakness (Swapnil's own view, agreed):** most of it still compares management's words with management's words. Partly addressed by the RBI check (regulator data) and the auditor check; the rest is Axis's own reporting.
+**Honest weakness (Swapnil's own view, agreed):** most of it still compares management's words with management's words. Under the 13 Oct framing this matters less: the claim is about what outsiders can verify, not about whether Axis delivered, except the integration-date badge, which rests on management's own report. Partly addressed by the RBI check (regulator data) and the auditor check; the rest is Axis's own reporting.
 
 ## 4. Findings so far (verified against the PDFs)
 
@@ -92,6 +93,7 @@ One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). W
 8. **Finder frozen (11 Oct, decision log row 36):** no further finder tuning before 17 Oct.
 9. **Disclosure timeline (row 31): built on dev, not shown publicly (12 Oct, row 37).** Per promise and per document, code labels each source: Restates target / Reports a figure / Mentions, no figure / Declined when asked (AI-flagged, person confirms) / No passage found by AI search. The headline "Target last referred to: <document>" is computed by code. It never sets a status and never says "silent". It isn't run for the demo: in live tests the finder did not return the FY23 AR p.109 restatement, which would move the headline to 1 Mar 2023 and overstate the gap. A reviewer can only accept or reject a finding, so a missed passage can't be fixed by hand. The public budget card shows the same finding from a hand text search instead (§4). Note for any future run: code labels deck p.15 "Restates target" (₹1,500 cr post-tax is half of the same estimate; integration-cost-evidence.md calls the 2-financial-year period a different basis) and Q4FY24 p.9 "Reports a figure" (~11% of Q4 YoY cost growth, a percentage, not rupees).
 10. **CFO close-out check approved by Swapnil (12 Oct, row 38), static content only.** Six items a CFO's office needs to close out the deal vs what Axis disclosed, ranked by the number of distinct analysts who asked on the 5 calls reviewed (integration cost 4, retention 3, EPS/ROE 3, synergies 2, migration 0, TSA exit 0). Coverage labels: Disclosed / Partly disclosed / Different basis disclosed / Not disclosed / Declined when asked; each line Observed or Inferred. No scores, no weights, no AI. Headline (corrected 12 Oct after recount; "asked about most are the least disclosed" was not supported: integration cost, the most asked, is Partly disclosed, and TSA exit has 0 asks and is Not disclosed): "1 of 6 items fully disclosed. None of the 4 items analysts asked about is fully disclosed." Counts shown as deal-day vs later (e.g. "4 (3 on deal day, 1 later)"); one question can count under two items (the 3 EPS/ROE asks are the same 3 questions counted under integration cost); 7 analysts asked, 5 of them on the 1 Mar 2023 call; Mahrukh Adajania (call p.5) counted under retention as Inferred. FY24 AR p.212 calls TSA costs a kind of integration expense ("the transitional services agreement and other integration expenses") just before ₹1,106 cr, so ₹1,106 cr very likely includes TSA (Inferred, not stated). Build prompt: Phase 4.9 in chat 12 Oct. Built as Phase 4.9 after 4.8. Goodwill/PPA stays out of scope.
+11. **Framing (13 Oct, row 41):** "can anyone outside tell whether the acquirer delivered?"; the finding is the missing bridge between the announced and the tracked number. Outside research (PwC US May 2026; McKinsey 2004) is one sentence of context, never evidence about Axis; never say or imply Axis is in PwC's "nearly a third". No site or HQ headline change before 17 Oct. Old wording still live, to change after 17 Oct: the intro in `src/App.tsx` ("What management promised. What the evidence shows.") and the method page (`docs/methodology.md` and `src/Methodology.tsx`: "did we deliver what we told the market?").
 
 ## 6. Guardrails for anyone changing the app
 
@@ -116,6 +118,7 @@ The 11–17 Oct plan is done except the items below (checks 1–3 built, RBI che
 4. **17 Oct (sprint end):** fix only demo blockers; keep a backup recording.
 5. **By 20 Oct, methodology page:** DONE, live at /#methodology since 13 Oct.
 6. **By 25 Oct, placement assets:** resume bullet (drafts given in chat 13 Oct, including a job-description keyword variant; none approved yet; needs Swapnil's rough hours; details in private notes), 2-minute story, the sharp insight (§11). Dropped 13 Oct: an "Excel synergy bridge" (the live Reporting basis panel already states "No bridge found from the CY2020 opex baseline → 30–40% target → internal six-quarter Board plan → realised saving."; most Excel cells would be "not disclosed").
+7. **Idea under discussion, not decided (Swapnil, 13 Oct):** a second page listing other completed deals. Nothing is approved; no new deals before 17 Oct (§5 item 1). Details and Claude's proposed rules: `private/ai-working-notes.md`.
 - **Deferred:**
   - Showing the AI disclosure timeline publicly: only once a test run returns the FY23 AR p.109 restatement (finder frozen, row 36; hidden, row 37).
   - goodwill / purchase-price allocation
@@ -165,13 +168,15 @@ Say so plainly if asked.
 
 ## 11. Placement story (checked against the sources 13 Oct)
 
-- **What it is, in one line:** a public check of whether Axis Bank delivered what it promised when it bought Citi India's consumer business: 4 promises in Axis's own words, tested against 11 Axis documents, every number with a page, statuses set by fixed rules.
+- **What it is, in one line (DRAFT for the 13 Oct framing, not yet approved):** a check of whether anyone outside can tell if Axis Bank delivered what it promised when it bought Citi India's consumer business: 4 promises in Axis's own words, checked against 11 of Axis's own documents, to the page. Only one, the integration date, can be settled from public documents, and only on management's own report; for the other three, the bridge from the announced number to a reported one is missing or incomplete.
+- **What it is, in one line (before 13 Oct):** a public check of whether Axis Bank delivered what it promised when it bought Citi India's consumer business: 4 promises in Axis's own words, tested against 11 Axis documents, every number with a page, statuses set by fixed rules.
 - **The sharp insight:** *the promise was public; the scorecard became private.* The 30–40% cost-saving target was public; success was later reported against an internal six-quarter Board plan (Q4FY25 call p.13), and in April 2025 Axis said it "no longer separate[s] the Citi and the Axis book". A different basis, not a miss.
-- **30-second version:** "After a deal, the CFO promises savings, timelines and costs, and almost nobody checks later. I took Axis Bank's purchase of Citi's India consumer business and tested 4 promises against 11 of Axis's own filings and calls. Axis says integration finished early. But only ₹1,323 crore of a roughly ₹2,000 crore cost estimate was ever disclosed, and savings were judged against an internal Board plan, not the public 30–40% target. So 3 of 4 promises are honestly 'Unverifiable'. That's the gap a CFO office should close for its own deals."
+- **30-second version (DRAFT for the 13 Oct framing, not yet approved):** "After a deal, companies announce savings, costs and timelines. Later, can anyone outside tell whether they delivered? I tested Axis Bank's purchase of Citi India's consumer business: 4 promises, 11 of Axis's own documents, every number to the page. Only one, the integration date, can be settled, and only on management's own report. For the other three the bridge is missing or incomplete: a 30–40% cut in Citi's 2020 operating costs was announced, but success was later measured against an internal Board plan; about ₹2,000 crore of integration cost was estimated, but Axis disclosed ₹1,323 crore, for only the first 13 of 18 months. The promise was public; the scorecard became private."
+- **30-second version (before 13 Oct):** "After a deal, the CFO promises savings, timelines and costs, and almost nobody checks later. I took Axis Bank's purchase of Citi's India consumer business and tested 4 promises against 11 of Axis's own filings and calls. Axis says integration finished early. But only ₹1,323 crore of a roughly ₹2,000 crore cost estimate was ever disclosed, and savings were judged against an internal Board plan, not the public 30–40% target. So 3 of 4 promises are honestly 'Unverifiable'. That's the gap a CFO office should close for its own deals."
 - **Why the live site has no AI:** "I built the AI, measured it, and decided where it's safe." The finder found 4 of 6 passages on a small held-out test; no invented quote passed the word-for-word check; but 4 real passages were off-question, and the timeline missed the FY23 p.109 sentence, which would have overstated the gap. So AI finds, a person confirms, rules decide.
 - **What it proves:** turning a CFO question into testable claims; reading bank disclosures to the page; separating promise from later reporting; testing an AI tool and making a go/no-go call; shipping with release controls (tests, backups, rollback).
-- **What it doesn't prove:** that Axis missed anything; coding skill (Codex wrote the code; Swapnil designed it, set the rules, reviewed and tested every release); that the method scales to many deals; client impact.
-- **Never claim:** "AI-powered", "forensic", "platform", "tracks M&A deals", "Axis missed/failed", "66% of budget spent" (it's an estimate and management narrative, not audited), or that Swapnil coded it.
+- **What it doesn't prove:** that Axis missed anything; coding skill (Codex wrote the code; Swapnil designed it, set the rules, reviewed and tested every release); that the method scales to many deals (only one deal is checked); client impact.
+- **Never claim:** "AI-powered", "forensic", "platform", "tracks M&A deals", "Axis missed/failed", "66% of budget spent" (it's an estimate and management narrative, not audited), or that Swapnil coded it, or that it "works for any deal" (until a second deal is checked).
 - **Resume bullets:** drafts (finance-led and build-led, X-Y-Z) were given in chat on 13 Oct, pending Swapnil's rough hours and the job description. Approved wording goes to Career-OS, not here.
 
 ## Release log (11–13 Oct)

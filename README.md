@@ -1,6 +1,6 @@
 # M&A Value Realization Tracker (India)
 
-**Did the acquirer deliver what it publicly promised?** A cited, rule-based check of Axis Bank's purchase of Citi India's consumer business (closed 1 March 2023).
+**Can anyone outside tell whether the acquirer delivered what it publicly promised?** A cited, rule-based check of Axis Bank's purchase of Citi India's consumer business (closed 1 March 2023).
 
 It is the check a CFO's office runs on its own deal after closing. It is a public-disclosure reconciliation, not proof of fraud, not an investment tool, and not a platform. For each promise it:
 

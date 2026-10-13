@@ -2,6 +2,8 @@
 
 *Current as of 13 Oct 2026. Live since 13 Oct: https://doting-zebra-426.convex.site.*
 
+*Framing (13 Oct, decision log row 41): can anyone outside tell whether the acquirer delivered what it promised? The main finding is the missing bridge between the number announced and the number later tracked.*
+
 ## Problem
 
 After a deal, management promises value. Later reporting often drops the promise, changes its basis, or stops reporting it. Few people line up the promise against what was actually reported.
