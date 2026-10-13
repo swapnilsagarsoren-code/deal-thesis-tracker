@@ -6,7 +6,7 @@ How this tracker checks Axis Bank's promises about its acquisition of Citi India
 
 - **It is** a public-disclosure reconciliation: it puts what Axis promised at deal time next to what Axis later reported, with the exact words and page for each.
 - **It is** the kind of check a CFO's office runs on its own deal: did we deliver what we told the market?
-- **It is not** proof of fraud, failure or intent. Every source here is prepared by Axis's management, including the audited accounts.
+- **It is not** proof of fraud, failure or intent. Every source here except one RBI data table is prepared by Axis's management, including the audited accounts.
 - **It is not** an investment tool, and it does not track anything live. It covers one deal, checked by hand.
 
 ## 1. How promises are picked
@@ -52,7 +52,7 @@ A fixed set of rules in code decides every status. The same evidence always give
 - **"Verified" means only that the words are on that page**, not that they answer the question. On questions frozen before testing, it found 4 of 6 and correctly found nothing for 3 of 3.
 - **It is switched off on this site.** Every finding shown here was entered and checked by a person, and fixed rules, never AI, decide each status.
 - **The disclosure timeline is not shown on this site.** It labels which document last repeats a target. In testing, the AI did not return one key sentence, which would have overstated the gap, so the finding shown is from a hand text search.
-- **Three checks stand between the AI and the result:** code confirms the quote appears word for word on that page, a person confirms what it means, and only then do the fixed rules give a status.
+- **When the finder is used, three checks stand between it and the result:** code confirms the quote appears word for word on that page, a person confirms what it means, and only then do the fixed rules give a status.
 - **When the AI finds nothing, it must show what it searched**, so a gap is visible rather than hidden.
 - The reason is simple: reading documents is where AI helps; deciding pass or fail must be repeatable and checkable, so it stays in code.
 
@@ -61,6 +61,8 @@ A fixed set of rules in code decides every status. The same evidence always give
 - **Reporting basis.** When a later claim is measured differently from the original promise, the tracker compares six things: metric, size, baseline, business scope, period and what it is measured against. Each is labelled "Comparable", "Different basis disclosed" or "Insufficient detail". It never concludes that a promise was abandoned or that anyone intended to mislead.
 - **Integration-cost reconciliation.** Disclosed amounts are added only when they use the same label, the same units and back-to-back periods. Stamp duty, policy changes, goodwill and the purchase price are listed separately and never added in. Where periods do not match the original estimate, no variance is calculated.
 - **Assurance level on every number.** Each figure is labelled as an audited note, annual-report management discussion, or call commentary, so you can see how much checking stands behind it.
+- **CFO close-out check.** Six items a CFO's office would need to close out the deal, set against what Axis disclosed. Each is labelled Disclosed, Partly disclosed, Different basis disclosed, Not disclosed or Declined when asked, and each line is marked Observed or Inferred. Items are ranked by how many analysts asked about them on the five calls reviewed; that shows what was asked, not how important it is.
+- **Regulator data check.** RBI's monthly bank-wise card statistics are compared with Axis's card figure at closing. RBI counts all outstanding cards and Axis counted cards of consenting customers, so the result is shown as not comparable rather than forced to match.
 
 ## 6. The honest sequence
 
@@ -69,11 +71,11 @@ A fixed set of rules in code decides every status. The same evidence always give
 
 ## 7. Limits
 
-- All sources are prepared by Axis's management. Even audited accounts reflect management's choices.
+- All sources except one RBI data table are prepared by Axis's management. Even audited accounts reflect management's choices.
 - Not disclosing a number is not the same as not delivering it. A missing disclosure is shown as a gap, never as a failure.
 - Sources were searched by text. A figure in a table with different wording could be missed.
 - This covers one deal, in depth. It is a working prototype, not a complete record of Indian M&A.
 
 ## Sources reviewed
 
-Deal presentation and conference call (1 March 2023); completion announcement; earnings calls for Q4 FY24, Q1 FY25, Q2 FY25 and Q4 FY25; Axis Bank annual reports FY2022-23, FY2023-24, FY2024-25 and FY2025-26. All are linked from the tracker with page numbers.
+Deal presentation and conference call (1 March 2023); completion announcement; earnings calls for Q4 FY24, Q1 FY25, Q2 FY25 and Q4 FY25; Axis Bank annual reports FY2022-23, FY2023-24, FY2024-25 and FY2025-26; RBI bank-wise ATM/POS/card statistics for January, February and March 2023. All are linked from the tracker with page numbers.
