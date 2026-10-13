@@ -1,6 +1,6 @@
 # HANDOFF — read this first
 
-For any AI model or person continuing this project. Last updated: **14 Oct 2026, ~00:20 IST (after the Phase 5.1 release)**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST). **Framing changed 13 Oct (decision log row 41):** "can anyone outside tell whether the acquirer delivered?"
+For any AI model or person continuing this project. Last updated: **14 Oct 2026, ~02:05 IST (app code public on GitHub; GrowthX submission rules)**. **Status: the full tracker is LIVE** (released 13 Oct 2026, 17:30 IST). **Framing changed 13 Oct (decision log row 41):** "can anyone outside tell whether the acquirer delivered?"
 
 ## 1. Who you are working with, and who does what
 
@@ -31,7 +31,7 @@ For any AI model or person continuing this project. Last updated: **14 Oct 2026,
 
 ## 3. Where things stand (13 Oct 2026, after release)
 
-**Live app:** https://doting-zebra-426.convex.site. Convex prod `doting-zebra-426` runs commit **5831b1e** (Phase 5.1 framing text, released 14 Oct ~00:10 IST; Phase 5.0 release 751f881 on 13 Oct 17:30 IST). Dev: `deafening-sparrow-421`, https://deafening-sparrow-421.convex.site. React + Vite + Convex; code in `~/build-sprint-app` (local git only, not on GitHub).
+**Live app:** https://doting-zebra-426.convex.site. Convex prod `doting-zebra-426` runs commit **5831b1e** (Phase 5.1 framing text, released 14 Oct ~00:10 IST; Phase 5.0 release 751f881 on 13 Oct 17:30 IST). Dev: `deafening-sparrow-421`, https://deafening-sparrow-421.convex.site. React + Vite + Convex; code in `~/build-sprint-app`, public on GitHub since 14 Oct: https://github.com/swapnilsagarsoren-code/deal-thesis-tracker-app (prod runs 5831b1e; later commits on main are README only).
 
 One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). What a visitor sees, in menu order:
 
@@ -113,9 +113,9 @@ One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). W
 The 11–17 Oct plan is done except the items below (checks 1–3 built, RBI check published as "Not comparable", release done on 13 Oct instead of 16 Oct).
 
 1. **14 Oct: show the live site to 3 people** (Aman, Accenture CFO & EV, first) and log one comment from each. Zero so far.
-2. **15 Oct: record the 3-minute demo** (order below).
+2. **15 Oct: record the 3-minute demo** (order below). GrowthX doesn't require a video (Shaktimaan, 14 Oct); the demo is still a placement asset (item 6).
 3. **16 Oct post-release deep check: deleted (Swapnil, 14 Oct).** Swapnil's reason: on 14 Oct Phase 5.1 passed Mac tests 250/250 and check-live on prod (all source links 200), prod data was unchanged, and the new text was confirmed live. (Item kept as a one-line note so later item numbers don't change.)
-4. **17 Oct (sprint end):** fix only demo blockers; keep a backup recording.
+4. **17 Oct (sprint end):** fix only demo blockers; keep a backup recording. **GrowthX submission (Shaktimaan, 14 Oct ~01:45 IST): hard cutoff 11:00 AM IST Sat 17 Oct.** Needs the live URL, a public GitHub repo with the app code (docs only don't count; no `.env` or passcode committed: done 14 Oct, see release log) and numbers with screenshots; pick one track; no video required. Open: which tracks exist, and what counts as "numbers". Claude's advice: submit on Fri 16 Oct evening, not on Saturday morning.
 5. **By 20 Oct, methodology page:** DONE, live at /#methodology since 13 Oct.
 6. **By 25 Oct, placement assets:** resume bullet (drafts given in chat 13 Oct, including a job-description keyword variant; none approved yet; needs Swapnil's rough hours; details in private notes), 2-minute story, the sharp insight (§11). Dropped 13 Oct: an "Excel synergy bridge" (the live Reporting basis panel already states "No bridge found from the CY2020 opex baseline → 30–40% target → internal six-quarter Board plan → realised saving."; most Excel cells would be "not disclosed").
 7. **Idea under discussion, not decided (Swapnil, 13 Oct):** a second page listing other completed deals. Nothing is approved; no new deals before 17 Oct (§5 item 1). Details and Claude's proposed rules: `private/ai-working-notes.md`.
@@ -150,7 +150,7 @@ Say so plainly if asked.
 | Thing | Location |
 |---|---|
 | This handoff and the planning docs | `~/Downloads/Work/deal-thesis-tracker` → GitHub `swapnilsagarsoren-code/deal-thesis-tracker` (public) |
-| App code | `~/build-sprint-app` (local git only; prod runs 5831b1e) |
+| App code | `~/build-sprint-app` → GitHub `swapnilsagarsoren-code/deal-thesis-tracker-app` (public since 14 Oct; prod runs 5831b1e) |
 | Prod backups | `~/build-sprint-app/artifacts/prod-backup-2026-10-13-*.zip` |
 | Release scripts | `~/build-sprint-app/scripts/prod-backup.mjs`, `seed-prod.mjs`, `rehearse-restore-dev.mjs`, `check-live.mjs` |
 | Edit passcode | Convex env var `EDIT_PASSCODE` per deployment (never in files or chat) |
@@ -180,6 +180,7 @@ Say so plainly if asked.
 - **Resume bullets:** drafts (finance-led and build-led, X-Y-Z) were given in chat on 13 Oct, pending Swapnil's rough hours and the job description. Approved wording goes to Career-OS, not here.
 
 ## Release log (11–14 Oct)
+- **14 Oct ~01:55 IST: app code public (decision log row 44).** Swapnil pushed `~/build-sprint-app` to the new public repo https://github.com/swapnilsagarsoren-code/deal-thesis-tracker-app; `git ls-remote` confirms main = 5831b1e, the commit prod runs. Before the push (read-only scan by Claude): no `.env` file ever committed; `artifacts/`, `dist/`, `test-results/` never committed; no `sk-ant-` string and no deploy-key value in any commit; the only passcode and API-key values in the code are test dummies (`tests/finderBackend.test.ts`); all 20 commits use the GitHub noreply email. The push command checked the real dev and prod passcodes against all history first: 0 hits. Shaktimaan's 14 Oct review: points 1–3 were already covered on the site (EPS/ROE: consolidated figures can't isolate the acquired business, and Axis reports April–March, so Axis reports no CY24 EPS or ROE; the KAM title "Acquisition of Citibank's India Consumer Business" is in the collapsed "Key audit matter titles" list, FY23 standalone auditor's report PDF p.212; the cost table's tax basis column says "not stated", plus the limitation line). Point 4 ("CFO close-out is really an outside reviewer's checklist") goes to the 3 reviewers instead of a rename. Both repos' READMEs now link each other.
 - **14 Oct ~01:00 IST:** GitHub repo About box updated by Swapnil: Website → https://doting-zebra-426.convex.site; description → "Can anyone outside tell whether an Indian acquirer delivered what it promised? One deal checked to the page: Axis Bank × Citi India consumer. Fixed rules set each status; no AI on the live site." (it had said "AI extracts numbers from filings… pre-registered thresholds" and linked the old mockup). 16 Oct post-release deep check deleted by Swapnil (scheduled task removed; §7 item 3). Dev-finder Anthropic API keys disabled by Swapnil in the Anthropic Console.
 - **14 Oct ~00:45 IST: HQ key points corrected (text only, swapnilhq `src/content/builds/deal-thesis-tracker.md`; Swapnil commits only that file and pushes).** "The real finding" said "there is no public bridge between what Axis announced and what it later reported": too absolute, since the integration date is settled on management's report and integration cost is disclosed for 13 of 18 months. It now uses the agreed line ("only one, the integration date, can be settled from public documents, and only on management's own report. For the other three, the bridge is missing or incomplete"). Also: the integration point no longer puts "seven weeks" in Axis's mouth (Axis said "2 months ahead", Q1FY25 call p.4); cost savings "never disclosed a percentage" → "disclosed no saving as a percentage of Citi's costs in the documents reviewed"; EPS/ROE "No later document" → "No reviewed document". Reviewed by the checker agent. From 14 Oct ~00:30 only one Claude chat edits files (Swapnil).
 - **RELEASED 14 Oct ~00:10 IST (Phase 5.1, framing text only; decision log row 42).** Prod = commit 5831b1e (3 lines: intro "What management promised. How much anyone outside can check."; method-page line "can the market tell whether we delivered what we promised?"; meta description). Mac tests 250/250, fail 0. Dev: deploy + check-live PASS + new-text check "NEW TEXT LIVE". Prod: backup `artifacts/prod-backup-2026-10-14-pre-phase5-1.zip` (282,888 bytes), deploy, check-live PASS (all source links 200; summary, close-out headline, RBI, date wording, 9 menu items, auditor table, methodology), "NEW TEXT LIVE ON PROD". Claude re-checked: prod HTML and bundle carry the new text and none of the old; read-only Convex: deal Integration Delivered rev 4, Cost savings Unverifiable rev 1, additionalPromise both Unverifiable rev 1, reportingReview rev 2, finderRun 0, sourcePage 0 (finder still off). Edits made by Claude directly (text only), committed by Swapnil. Rollback if ever needed: `git revert` the 5.1 commit and redeploy prod; no data restore. **Last stable state = 5831b1e + prod-backup-2026-10-14-pre-phase5-1.zip.**

@@ -10,9 +10,10 @@ It is the check a CFO's office runs on its own deal after closing. It is a publi
 4. Lets fixed rules in code set the status. AI never decides a status.
 5. Shows gaps as gaps: "Unverifiable", "Different basis disclosed", "not disclosed". Never "failed" when data is missing.
 
-## Status (13 Oct 2026)
+## Status (14 Oct 2026)
 
 - **Live tracker (full version, released 13 Oct 2026):** https://doting-zebra-426.convex.site. All 4 promises, the CFO close-out check, the RBI card-data check, the auditor check and the [method page](https://doting-zebra-426.convex.site/#methodology). The AI evidence finder is switched off on the live site.
+- **App code (public):** https://github.com/swapnilsagarsoren-code/deal-thesis-tracker-app. This repo holds the planning docs, the handoff and the method; that one holds the code that runs the live site.
 - **Build write-up:** https://hq.swapnilsoren.com/builds/deal-thesis-tracker
 - **Built during** the GrowthX Build Sprint, 2–17 Oct 2026. Scope was cut from 4–5 deals to one deal in depth on 10 Oct (decision log rows 24–25).
 - **The review is retrospective**, not outcome-blind: the deal was chosen and its results read in the same period ([methodology §6](docs/methodology.md)).
