@@ -112,6 +112,8 @@ One deal: Axis Bank buying Citi India's consumer business (closed 1 Mar 2023). W
 
 The 11–17 Oct plan is done except the items below (checks 1–3 built, RBI check published as "Not comparable", release done on 13 Oct instead of 16 Oct).
 
+**21 Oct: AI-native build plan drafted, not approved:** [`docs/ai-native-plan.md`](docs/ai-native-plan.md) covers the finder on prod with a public accept/reject queue, a scheduled quarterly re-check, and RateGain × Sojern as a second deal. It is about 12 days at 3 h/day and has 4 open decisions at the end.
+
 1. **14 Oct: show the live site to 3 people** (Aman, Accenture CFO & EV, first) and log one comment from each. Zero so far.
 2. **15 Oct: record the 3-minute demo** (order below). GrowthX doesn't require a video (Shaktimaan, 14 Oct); the demo is still a placement asset (item 6).
 3. **16 Oct post-release deep check: deleted (Swapnil, 14 Oct).** Swapnil's reason: on 14 Oct Phase 5.1 passed Mac tests 250/250 and check-live on prod (all source links 200), prod data was unchanged, and the new text was confirmed live. (Item kept as a one-line note so later item numbers don't change.)
